@@ -1,0 +1,4 @@
+# Archivos internos con datos de clientes — NO publicar
+generar_datos.py
+robots/assets/mapas/
+.DS_Store

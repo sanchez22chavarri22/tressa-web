@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Robótica — TRESSA · Limpieza autónoma inteligente</title>
+<meta name="description" content="La división robótica de Tressa: flota de robots de limpieza autónoma con inteligencia artificial operando en todo Chile. Modelos TN70, TN10 y robot con pantalla publicitaria.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04070D; --bg2:#080D16; --panel:#0C1320; --panel2:#101A2C; --line:rgba(255,255,255,.08);
+  --text:#F5F7FA; --dim:#9AA7B8; --faint:#5C6B7E;
+  --teal:#26C6DA; --teal-deep:#0E7C95; --gold:#F0B429; --green:#34D399;
+  --grad:linear-gradient(110deg,#7BE3F2 0%,#26C6DA 45%,#3D7BFA 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+::selection{background:rgba(38,198,218,.35)}
+
+/* ── NAV ── */
+nav{position:fixed;inset:0 0 auto 0;z-index:1000;transition:.4s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(4,7,13,.72);backdrop-filter:blur(20px) saturate(1.4);border-color:var(--line)}
+.nav-in{max-width:1240px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:30px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:26px;width:auto}
+.brand span{font-size:.72rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--teal);border-left:1px solid var(--line);padding-left:12px}
+.nav-links{margin-left:auto;display:flex;gap:22px;font-size:.85rem;font-weight:500;color:var(--dim)}
+.nav-links a{transition:color .25s}
+.nav-links a:hover{color:#fff}
+.nav-cta{font-size:.84rem;font-weight:600;background:rgba(255,255,255,.1);border:1px solid var(--line);padding:8px 18px;border-radius:99px;transition:.25s}
+.nav-cta:hover{background:var(--teal);color:#04121A;border-color:var(--teal)}
+@media(max-width:980px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.hero{min-height:104vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+/* haz de luz (port del Spotlight de Aceternity) */
+.beam{position:absolute;z-index:1;top:-10%;left:-5%;height:169%;width:138%;opacity:0;pointer-events:none;animation:beam 2.2s ease .9s forwards}
+@keyframes beam{0%{opacity:0;transform:translate(-22%,-12%) scale(.6)}100%{opacity:1;transform:translate(0,0) scale(1)}}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.02fr .98fr;gap:24px;align-items:center;width:100%;max-width:1240px;margin:0 auto;padding:130px 28px 60px}
+.hero-left{text-align:left}
+.hero-3d{position:relative;height:600px}
+spline-viewer{width:100%;height:100%;display:block}
+.hero-3d .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
+.hero-3d .fallback img{width:min(400px,80%);filter:drop-shadow(0 50px 80px rgba(0,0,0,.7)) drop-shadow(0 0 70px rgba(38,198,218,.14))}
+.hero-3d.failed spline-viewer{display:none}
+.hero-3d.failed .fallback{display:flex}
+.hero-3d .hint3d{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;text-align:center;padding-top:120px}.hero-left{text-align:center;display:flex;flex-direction:column;align-items:center}.hero-3d{height:auto}.hero-3d spline-viewer,.hero-3d .hint3d{display:none}.hero-3d .fallback{display:flex;position:relative}}
+#lidar{position:absolute;inset:0;width:100%;height:100%}
+.floor{position:absolute;inset:auto 0 0 0;height:46vh;perspective:900px;-webkit-mask-image:linear-gradient(180deg,transparent,black 50%);mask-image:linear-gradient(180deg,transparent,black 50%);pointer-events:none}
+.floor .fgrid{position:absolute;inset:-60% -40% 0;transform:rotateX(62deg);transform-origin:bottom;
+  background-image:repeating-linear-gradient(to bottom,rgba(38,198,218,.16) 0 1px,transparent 1px 64px),repeating-linear-gradient(to right,rgba(38,198,218,.16) 0 1px,transparent 1px 64px);
+  animation:gridmove 7s linear infinite}
+@keyframes gridmove{to{background-position:0 64px,0 0}}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:26vh;background:linear-gradient(180deg,transparent,var(--bg));pointer-events:none}
+.hero-content{position:relative;z-index:2;padding:140px 28px 0;display:flex;flex-direction:column;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.76rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(38,198,218,.35);background:rgba(38,198,218,.07);border-radius:99px;padding:8px 20px;margin-bottom:26px;opacity:0;animation:rise 1.1s .2s forwards}
+.hero-eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pls 2s infinite}
+@keyframes pls{0%{box-shadow:0 0 0 0 rgba(52,211,153,.6)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero h1{font-size:clamp(2.9rem,8vw,6.2rem);font-weight:800;letter-spacing:-.035em;line-height:1.02;opacity:0;animation:rise 1.1s .4s forwards}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin-top:26px;font-size:clamp(1.02rem,1.6vw,1.3rem);color:var(--dim);max-width:640px;opacity:0;animation:rise 1.1s .6s forwards}
+.hero-ctas{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise 1.1s .8s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:99px;font-weight:600;font-size:1rem;transition:.25s;cursor:pointer;border:none;font-family:inherit}
+.btn-fill{background:var(--grad);color:#031018;box-shadow:0 10px 36px rgba(38,198,218,.32)}
+.btn-fill:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 48px rgba(38,198,218,.5)}
+.btn-ghost{background:rgba(255,255,255,.07);color:#fff;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.14)}
+.hero-robot{position:relative;z-index:2;margin-top:50px;width:min(420px,66vw);filter:drop-shadow(0 50px 80px rgba(0,0,0,.7)) drop-shadow(0 0 70px rgba(38,198,218,.14));opacity:0;animation:riseBig 1.4s 1s forwards}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;color:var(--faint);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;animation:bob 2.6s ease-in-out infinite}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes riseBig{from{opacity:0;transform:translateY(80px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
+
+/* ── MARQUEE capacidades ── */
+.cap-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);padding:18px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent);mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent)}
+.cap-track{display:flex;gap:0;width:max-content;animation:mq 30s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.cap{flex:none;display:flex;align-items:center;gap:14px;padding:0 28px;font-size:.92rem;font-weight:600;color:var(--dim);letter-spacing:.06em;text-transform:uppercase}
+.cap i{font-style:normal;color:var(--teal)}
+
+/* ── STATEMENT ── */
+.statement{padding:17vh 28px;max-width:980px;margin:0 auto;text-align:center}
+.statement p{font-size:clamp(1.7rem,4vw,3rem);font-weight:700;letter-spacing:-.025em;line-height:1.22;color:var(--faint)}
+.statement p .w{transition:color .5s ease}
+.statement p .w.lit{color:var(--text)}
+.statement p em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ── SECCIONES ── */
+section{position:relative}
+.sec-pad{padding:12vh 0}
+.kicker{font-size:.76rem;font-weight:600;letter-spacing:.36em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+.sec-h{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:800;letter-spacing:-.03em;line-height:1.08}
+.sec-sub{margin-top:18px;color:var(--dim);font-size:1.08rem;max-width:580px}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.reveal.vis{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ── TRAYECTORIA ── */
+.tl{margin-top:70px;display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.tl::before{content:"";position:absolute;top:7px;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--teal),rgba(38,198,218,.06))}
+.tl-item{padding:38px 26px 0 0;position:relative}
+.tl-item::before{content:"";position:absolute;top:0;left:0;width:15px;height:15px;border-radius:50%;background:var(--bg);border:2px solid var(--teal);box-shadow:0 0 16px rgba(38,198,218,.5)}
+.tl-item h3{font-size:1.06rem;font-weight:700;margin-bottom:8px}
+.tl-item .when{font-size:.74rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.tl-item p{font-size:.92rem;color:var(--dim)}
+@media(max-width:880px){.tl{grid-template-columns:1fr;gap:34px}.tl::before{display:none}}
+.figures{margin-top:90px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.fig .n{font-size:clamp(2.3rem,4.5vw,3.6rem);font-weight:800;letter-spacing:-.04em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.fig .l{margin-top:8px;color:var(--dim);font-size:.92rem}
+@media(max-width:880px){.figures{grid-template-columns:repeat(2,1fr);gap:40px 16px}}
+
+/* ── PRODUCTOS ── */
+.product{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:10vh 0}
+.product.flip .p-img{order:2}
+.p-img{position:relative;display:flex;justify-content:center}
+.p-img::before{content:"";position:absolute;inset:12% 6%;background:radial-gradient(ellipse at center,rgba(38,198,218,.16),transparent 65%);filter:blur(30px)}
+.p-img img{position:relative;width:min(420px,80%);filter:drop-shadow(0 50px 70px rgba(0,0,0,.65));transition:transform .2s linear;will-change:transform}
+.p-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(38,198,218,.4);border-radius:99px;padding:6px 16px;margin-bottom:22px}
+.p-tag.ad{color:var(--gold);border-color:rgba(240,180,41,.45)}
+.p-name{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.03em}
+.p-desc{margin-top:16px;color:var(--dim);font-size:1.05rem;max-width:480px}
+.p-specs{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px 26px;border-top:1px solid var(--line);padding-top:26px}
+.spec .v{font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+.spec .v small{font-size:.85rem;font-weight:600;color:var(--teal);margin-left:2px}
+.spec .k{font-size:.78rem;color:var(--faint);margin-top:3px}
+@media(max-width:880px){.product{grid-template-columns:1fr;gap:40px}.product.flip .p-img{order:0}}
+
+/* robot con pantalla AD */
+.adbot{position:relative;display:flex;justify-content:center;align-items:center}
+.adbot img{width:min(380px,72%)}
+.adscreen{position:absolute;right:4%;top:6%;width:200px;aspect-ratio:9/14;background:#05070C;border:3px solid #1B2737;border-radius:16px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.7),0 0 40px rgba(38,198,218,.18);transform:rotate(4deg)}
+.adscreen::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.09) 0%,transparent 30%);pointer-events:none}
+.ad-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:18px;opacity:0;transition:opacity .8s}
+.ad-slide.on{opacity:1}
+.ad-slide .big{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.ad-slide .sm{font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.14em;text-transform:uppercase}
+.ad-slide img{width:70%;filter:drop-shadow(0 6px 16px rgba(0,0,0,.5))}
+.ad-s1{background:linear-gradient(160deg,#0E7C95,#06303D)}
+.ad-s2{background:linear-gradient(160deg,#B7791F,#5E3B0B)}
+.ad-s3{background:linear-gradient(160deg,#3D7BFA,#101A4C)}
+.ad-dots{position:absolute;bottom:10px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:2}
+.ad-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3)}
+.ad-dots span.on{background:#fff}
+@media(max-width:880px){.adscreen{width:132px;right:2%;top:10%}.ad-slide .big{font-size:1.05rem}.ad-slide .sm{font-size:.6rem}}
+
+/* ── COMPARATIVA ── */
+#comparar{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cmp-wrap{margin-top:56px;overflow-x:auto;border:1px solid var(--line);border-radius:22px;background:var(--panel)}
+table.cmp{width:100%;border-collapse:collapse;font-size:.92rem;min-width:760px}
+.cmp th,.cmp td{padding:16px 18px;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}
+.cmp thead th{font-size:.95rem;font-weight:700;background:var(--panel2)}
+.cmp thead th:first-child,.cmp td:first-child{text-align:left;color:var(--dim);font-weight:500}
+.cmp tbody tr:hover{background:rgba(38,198,218,.04)}
+.cmp .hl{color:var(--teal);font-weight:700}
+.cmp .y{color:var(--green)}.cmp .n2{color:var(--faint)}
+
+/* ── INTELIGENCIA ── */
+.intel{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start;padding:12vh 0}
+.intel-sticky{position:sticky;top:16vh}
+.intel-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:420px}
+.intel-visual .ring{position:absolute;width:380px;height:380px;border-radius:50%;border:1px dashed rgba(38,198,218,.35);animation:spin 26s linear infinite}
+.intel-visual .ring.r2{width:480px;height:480px;animation-duration:44s;animation-direction:reverse;border-color:rgba(38,198,218,.18)}
+.intel-visual img{width:min(330px,70%);position:relative;filter:drop-shadow(0 36px 60px rgba(0,0,0,.7))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.intel-steps{display:flex;flex-direction:column;gap:30vh;padding:8vh 0 14vh}
+.istep{opacity:.18;transform:translateY(12px);transition:opacity .6s,transform .6s}
+.istep.on{opacity:1;transform:none}
+.istep .num{font-size:.78rem;font-weight:700;letter-spacing:.3em;color:var(--teal);margin-bottom:14px}
+.istep h3{font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}
+.istep p{color:var(--dim);font-size:1.02rem;max-width:430px}
+@media(max-width:880px){.intel{grid-template-columns:1fr}.intel-sticky{position:relative;top:0}.intel-steps{gap:12vh;padding:6vh 0}.istep{opacity:1}}
+
+/* ── ACCESORIOS ── */
+.acc-grid{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.acc{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;transition:.3s;position:relative;overflow:hidden}
+.acc:hover{border-color:rgba(38,198,218,.5);transform:translateY(-4px)}
+.acc::before,.pstep::before{z-index:0}
+.acc::after,.pstep::after{content:"";position:absolute;inset:0;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(38,198,218,.12),transparent 75%);opacity:0;transition:opacity .35s;pointer-events:none}
+.acc:hover::after,.pstep:hover::after{opacity:1}
+.acc .ic{width:46px;height:46px;border-radius:14px;background:rgba(38,198,218,.12);border:1px solid rgba(38,198,218,.25);display:grid;place-items:center;font-size:1.3rem;margin-bottom:18px}
+.acc h3{font-size:1.08rem;font-weight:700;margin-bottom:8px}
+.acc p{color:var(--dim);font-size:.92rem}
+@media(max-width:880px){.acc-grid{grid-template-columns:1fr}}
+
+/* ── PROCESO ── */
+#proceso{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.steps{margin-top:60px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:paso}
+.pstep{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:30px 26px;position:relative;transition:.3s}
+.pstep:hover{border-color:rgba(38,198,218,.5);transform:translateY(-4px)}
+.pstep::before{counter-increment:paso;content:"0" counter(paso);font-size:2.6rem;font-weight:800;letter-spacing:-.04em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:14px}
+.pstep h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.pstep p{color:var(--dim);font-size:.9rem}
+@media(max-width:880px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}}
+
+/* ── MAPA ── */
+.map-stage{margin-top:64px;position:relative;border-radius:26px;overflow:hidden;border:1px solid var(--line)}
+#mapa{height:540px;z-index:1}
+.leaflet-container{background:#04070D;font-family:'Inter',sans-serif}
+.map-overlay{position:absolute;z-index:500;top:26px;left:26px;background:rgba(4,7,13,.78);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:18px;padding:22px 26px;max-width:300px}
+.map-overlay h3{font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.map-overlay p{font-size:.88rem;color:var(--dim)}
+.map-overlay .cities{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px}
+.map-overlay .city{font-size:.74rem;font-weight:600;color:var(--teal);border:1px solid rgba(38,198,218,.35);border-radius:99px;padding:4px 11px}
+.pulse-dot{width:14px;height:14px;border-radius:50%;background:var(--teal);border:2px solid #04121A;box-shadow:0 0 0 0 rgba(38,198,218,.55);animation:mpulse 2.4s infinite}
+@keyframes mpulse{0%{box-shadow:0 0 0 0 rgba(38,198,218,.5)}70%{box-shadow:0 0 0 14px rgba(38,198,218,0)}100%{box-shadow:0 0 0 0 rgba(38,198,218,0)}}
+.leaflet-popup-content-wrapper{background:#0C1320;color:var(--text);border-radius:12px;border:1px solid var(--line)}
+.leaflet-popup-tip{background:#0C1320}
+@media(max-width:720px){.map-overlay{position:relative;top:0;left:0;max-width:none;border-radius:0;border:none;border-bottom:1px solid var(--line)}}
+
+/* ── RESULTADOS ── */
+.works{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.work{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#fff;aspect-ratio:4/3;cursor:pointer}
+.work img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.6,.2,1)}
+.work:hover img{transform:scale(1.07)}
+.work .cap2{position:absolute;inset:auto 0 0 0;padding:42px 20px 16px;background:linear-gradient(180deg,transparent,rgba(2,6,12,.88));color:#fff;font-size:.9rem;font-weight:600}
+.work .cap2 small{display:block;font-weight:400;color:rgba(255,255,255,.62);font-size:.76rem;margin-top:2px}
+.works-note{margin-top:22px;color:var(--faint);font-size:.84rem}
+@media(max-width:880px){.works{grid-template-columns:1fr}}
+.lb{position:fixed;inset:0;background:rgba(2,4,9,.94);z-index:2000;display:none;align-items:center;justify-content:center;padding:34px;backdrop-filter:blur(10px)}
+.lb.open{display:flex}
+.lb img{max-width:min(1000px,94vw);max-height:82vh;border-radius:18px;background:#fff}
+.lb .x{position:absolute;top:26px;right:30px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:1.1rem;cursor:pointer}
+
+/* ── FAQ ── */
+.faq{margin-top:56px;max-width:760px}
+.qa{border:1px solid var(--line);border-radius:16px;background:var(--panel);margin-bottom:12px;overflow:hidden;transition:border-color .3s}
+.qa.open{border-color:rgba(38,198,218,.45)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;background:none;border:none;color:var(--text);font-family:inherit;font-size:1rem;font-weight:600;text-align:left;cursor:pointer}
+.qa .chev{transition:transform .3s;color:var(--teal);flex:none}
+.qa.open .chev{transform:rotate(45deg)}
+.qa .ans{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.6,.2,1)}
+.qa .ans p{padding:0 24px 20px;color:var(--dim);font-size:.95rem}
+
+/* ── CTA / FOOTER ── */
+.final{padding:17vh 28px;text-align:center;position:relative;overflow:hidden}
+.final::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 420px at 50% 110%,rgba(38,198,218,.16),transparent 70%)}
+.final h2{position:relative;font-size:clamp(2.6rem,6.5vw,4.6rem);font-weight:800;letter-spacing:-.035em}
+.final p{position:relative;margin:22px auto 0;color:var(--dim);font-size:1.12rem;max-width:520px}
+.final .ctas{position:relative;margin-top:42px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-wsp{background:rgba(255,255,255,.05);color:var(--faint);border:1px dashed rgba(255,255,255,.18);cursor:default}
+.btn-wsp .soon{font-size:.66rem;font-weight:700;letter-spacing:.14em;background:rgba(38,198,218,.16);color:var(--teal);padding:3px 9px;border-radius:99px}
+footer{border-top:1px solid var(--line);padding:54px 0;background:var(--bg2)}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;font-size:.9rem;color:var(--dim)}
+.foot img{height:24px;margin-bottom:16px}
+.foot h4{color:var(--text);font-size:.82rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+.foot a{display:block;margin-bottom:9px;transition:color .2s}
+.foot a:hover{color:var(--teal)}
+.foot-base{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--faint);font-size:.8rem}
+@media(max-width:880px){.foot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="brand" href="../index.html">
+      <img src="assets/tressa_logo_white.png" alt="TRESSA">
+      <span>Robótica</span>
+    </a>
+    <div class="nav-links">
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#flota">La flota</a>
+      <a href="#comparar">Comparar</a>
+      <a href="#inteligencia">Inteligencia</a>
+      <a href="#proceso">Cómo funciona</a>
+      <a href="#presencia">Presencia</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="nav-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Solicitar demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <canvas id="lidar"></canvas>
+  <div class="floor"><div class="fgrid"></div></div>
+  <svg class="beam" viewBox="0 0 3787 2842" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g filter="url(#beamblur)">
+      <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501" transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)" fill="#7BE3F2" fill-opacity="0.18"></ellipse>
+    </g>
+    <defs>
+      <filter id="beamblur" x="0.860352" y="0.838989" width="3785.16" height="2840.26" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+        <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur"></feGaussianBlur>
+      </filter>
+    </defs>
+  </svg>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span class="pulse"></span>División Robótica · Flota operando ahora</div>
+      <h1>La limpieza,<br><em>reinventada.</em></h1>
+      <p>Robots autónomos con inteligencia artificial, operando cada día en tiendas, plantas y centros de distribución a lo largo de Chile.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-fill" href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Solicitar una demo</a>
+        <a class="btn btn-ghost" href="#flota">Conocer la flota</a>
+      </div>
+    </div>
+    <div class="hero-3d" id="hero3d">
+      <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" loading-anim-type="spinner-small-dark"></spline-viewer>
+      <div class="fallback"><img src="assets/tn70_front.png" alt="Robot de limpieza autónomo Tressa"></div>
+      <div class="hint3d">Interactivo — mueve el cursor</div>
+    </div>
+  </div>
+  <div class="hero-scroll">Desliza</div>
+</header>
+
+<!-- MARQUEE CAPACIDADES -->
+<div class="cap-band"><div class="cap-track" id="capTrack"></div></div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <p id="stWords">Más de 30 años cambiando el concepto de la limpieza en Chile. Hoy lo volvemos a cambiar — esta vez, <em>con robots.</em></p>
+</div>
+
+<!-- TRAYECTORIA -->
+<section id="trayectoria" class="sec-pad" style="padding-top:4vh">
+  <div class="wrap">
+    <div class="kicker reveal">Nuestra trayectoria</div>
+    <h2 class="sec-h reveal d1">De la higiene profesional<br>a la autonomía total.</h2>
+    <p class="sec-sub reveal d2">Tressa nació fabricando y distribuyendo soluciones de higiene industrial. Esa experiencia de décadas es la base de nuestra división robótica.</p>
+    <div class="tl">
+      <div class="tl-item reveal"><div class="when">Los orígenes</div><h3>+30 años de higiene profesional</h3><p>Elaboración, envasado y distribución de productos de limpieza y desinfección industrial para todo Chile.</p></div>
+      <div class="tl-item reveal d1"><div class="when">La consolidación</div><h3>Marcas y planta propia</h3><p>Fabricantes de marcas propias, planta de envases y distribución exclusiva de líneas internacionales como KH7.</p></div>
+      <div class="tl-item reveal d2"><div class="when">El salto</div><h3>Nace la división robótica</h3><p>Incorporamos robots de limpieza autónoma con IA y los desplegamos en retail, industria y centros de distribución.</p></div>
+      <div class="tl-item reveal d3"><div class="when">Hoy</div><h3>Flota nacional monitoreada 24/7</h3><p>Operación autónoma diaria con telemetría en la nube, reportes verificables y soporte de nuestro equipo en terreno.</p></div>
+    </div>
+    <div class="figures">
+      <div class="fig reveal"><div class="n" data-count="40" data-prefix="+">0</div><div class="l">robots en la flota</div></div>
+      <div class="fig reveal d1"><div class="n" data-count="20" data-prefix="+">0</div><div class="l">instalaciones en Chile</div></div>
+      <div class="fig reveal d2"><div class="n" data-count="150" data-prefix="+" data-suffix=" mil">0</div><div class="l">m² limpiados cada mes</div></div>
+      <div class="fig reveal d3"><div class="n" data-count="500" data-prefix="+">0</div><div class="l">horas autónomas al mes</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOTA -->
+<section id="flota" class="sec-pad" style="padding-bottom:2vh;padding-top:4vh">
+  <div class="wrap">
+    <div class="kicker reveal">La flota</div>
+    <h2 class="sec-h reveal d1">Cuatro especialistas.<br>Una sola obsesión: el resultado.</h2>
+    <p class="sec-sub reveal d2">Plataformas autónomas para cada tipo de superficie y operación — todas con la misma inteligencia de navegación y el respaldo de Tressa en terreno.</p>
+
+    <!-- TN70 DISC -->
+    <div class="product">
+      <div class="p-img"><img class="parallax" data-speed="0.06" src="assets/tn70_persp_tressa.png" alt="TN70-PRO Tressa"></div>
+      <div>
+        <span class="p-tag reveal">El buque insignia · Gran formato</span>
+        <h3 class="p-name reveal d1">TN70‑PRO</h3>
+        <p class="p-desc reveal d2">Fregadora autónoma de alto rendimiento para grandes superficies: pasillos de retail, bodegas y plantas. Cepillo gigante de 71 cm, navegación Never‑Lost™ y hasta 8.160 m² por carga.</p>
+        <div class="p-specs reveal d3">
+          <div class="spec"><div class="v">2.040<small>m²/h</small></div><div class="k">rendimiento</div></div>
+          <div class="spec"><div class="v">71<small>cm</small></div><div class="k">ancho de cepillo</div></div>
+          <div class="spec"><div class="v">4<small>h</small></div><div class="k">autonomía por carga</div></div>
+          <div class="spec"><div class="v">70<small>L</small></div><div class="k">agua limpia</div></div>
+          <div class="spec"><div class="v">50<small>L</small></div><div class="k">agua de recuperación</div></div>
+          <div class="spec"><div class="v">3D</div><div class="k">LiDAR opcional 360°</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TN70 CYLINDRICAL -->
+    <div class="product flip">
+      <div class="p-img"><img class="parallax" data-speed="0.05" src="assets/tn70_front.png" alt="TN70-PRO Cylindrical Brush"></div>
+      <div>
+        <span class="p-tag reveal">Industrial · Barre y friega</span>
+        <h3 class="p-name reveal d1">TN70‑PRO <span style="font-size:.55em;vertical-align:middle;color:var(--teal)">CB</span></h3>
+        <p class="p-desc reveal d2">Edición con cepillos cilíndricos: barre y friega en una sola pasada, sin prebarrido. Pensada para pisos industriales exigentes, con agitación de alta velocidad para superficies texturizadas.</p>
+        <div class="p-specs reveal d3">
+          <div class="spec"><div class="v">1<small>pasada</small></div><div class="k">barrido + fregado</div></div>
+          <div class="spec"><div class="v">600<small>RPM</small></div><div class="k">cepillos de alta velocidad</div></div>
+          <div class="spec"><div class="v">52<small>cm</small></div><div class="k">ancho cilíndrico</div></div>
+          <div class="spec"><div class="v">2<small>L</small></div><div class="k">bandeja de residuos</div></div>
+          <div class="spec"><div class="v">0</div><div class="k">prebarrido necesario</div></div>
+          <div class="spec"><div class="v">2.040<small>m²/h</small></div><div class="k">rendimiento</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TN10 -->
+    <div class="product">
+      <div class="p-img"><img class="parallax" data-speed="0.05" src="assets/tn10_tressa.png" alt="TN10-PRO Tressa"></div>
+      <div>
+        <span class="p-tag reveal">Compacto · Silencioso</span>
+        <h3 class="p-name reveal d1">TN10‑PRO</h3>
+        <p class="p-desc reveal d2">Compacto, ágil y silencioso (&lt;65 dB): ideal para plantas de venta con público, oficinas y clínicas. Pionero en separación de residuos húmedos y secos, con secado rápido del piso.</p>
+        <div class="p-specs reveal d3">
+          <div class="spec"><div class="v">&lt;65<small>dB</small></div><div class="k">operación silenciosa</div></div>
+          <div class="spec"><div class="v">Dual</div><div class="k">barrido y fregado</div></div>
+          <div class="spec"><div class="v">Seco<small>+húmedo</small></div><div class="k">separación de residuos</div></div>
+          <div class="spec"><div class="v">360°</div><div class="k">percepción de entorno</div></div>
+          <div class="spec"><div class="v">Smart</div><div class="k">modo manual opcional</div></div>
+          <div class="spec"><div class="v">Rápido</div><div class="k">secado del piso</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROBOT CON PANTALLA AD -->
+    <div class="product flip">
+      <div class="p-img adbot">
+        <img src="assets/tn10_tressa.png" alt="Robot con pantalla publicitaria">
+        <div class="adscreen" id="adscreen">
+          <div class="ad-slide ad-s1 on"><img src="assets/tressa_logo_white.png" alt="Tressa"><div class="sm">Limpieza en curso</div></div>
+          <div class="ad-slide ad-s2"><div class="big">2×1</div><div class="sm">Tu promoción aquí</div></div>
+          <div class="ad-slide ad-s3"><div class="big">Tu marca<br>en movimiento</div><div class="sm">Publicidad dinámica</div></div>
+          <div class="ad-dots"><span class="on"></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div>
+        <span class="p-tag ad reveal">Pantalla publicitaria · Medio rodante</span>
+        <h3 class="p-name reveal d1">Robot <span style="font-size:.55em;vertical-align:middle;color:var(--gold)">AD</span></h3>
+        <p class="p-desc reveal d2">El mismo robot autónomo, ahora también un canal de comunicación: pantalla lateral integrada para contenido institucional, promociones y campañas — publicidad que recorre la tienda mientras limpia.</p>
+        <div class="p-specs reveal d3">
+          <div class="spec"><div class="v">HD</div><div class="k">pantalla lateral integrada</div></div>
+          <div class="spec"><div class="v">24/7</div><div class="k">contenido programable</div></div>
+          <div class="spec"><div class="v">100%</div><div class="k">cobertura de la sala</div></div>
+          <div class="spec"><div class="v">2 en 1</div><div class="k">limpia y comunica</div></div>
+          <div class="spec"><div class="v">Cloud</div><div class="k">gestión remota de campañas</div></div>
+          <div class="spec"><div class="v">ROI</div><div class="k">un turno, dos servicios</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVA -->
+<section id="comparar" class="sec-pad">
+  <div class="wrap">
+    <div class="kicker reveal">Comparativa</div>
+    <h2 class="sec-h reveal d1">¿Cuál es para tu operación?</h2>
+    <div class="cmp-wrap reveal d2">
+      <table class="cmp">
+        <thead><tr><th>Característica</th><th>TN70‑PRO</th><th>TN70‑PRO CB</th><th>TN10‑PRO</th><th>Robot AD</th></tr></thead>
+        <tbody>
+          <tr><td>Ideal para</td><td>Retail y bodegas</td><td>Pisos industriales</td><td>Espacios con público</td><td>Salas de venta</td></tr>
+          <tr><td>Rendimiento</td><td class="hl">2.040 m²/h</td><td class="hl">2.040 m²/h</td><td>Compacto</td><td>Compacto</td></tr>
+          <tr><td>Modo de limpieza</td><td>Fregado profundo</td><td>Barre + friega en 1 pasada</td><td>Barrido y fregado dual</td><td>Barrido y fregado dual</td></tr>
+          <tr><td>Autonomía</td><td class="hl">4 h · 8.160 m²/carga</td><td>4 h</td><td>Turno completo</td><td>Turno completo</td></tr>
+          <tr><td>LiDAR 3D 360°</td><td class="y">Opcional</td><td class="y">Opcional</td><td class="n2">2D + visión</td><td class="n2">2D + visión</td></tr>
+          <tr><td>Nivel de ruido</td><td>Estándar</td><td>Estándar</td><td class="y">&lt;65 dB</td><td class="y">&lt;65 dB</td></tr>
+          <tr><td>Pantalla publicitaria</td><td class="n2">—</td><td class="n2">—</td><td class="n2">—</td><td class="y">✓ Integrada</td></tr>
+          <tr><td>Reportes en la nube</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+          <tr><td>Actualizaciones OTA</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- INTELIGENCIA -->
+<section id="inteligencia">
+  <div class="wrap intel">
+    <div class="intel-sticky">
+      <div class="kicker">Inteligencia</div>
+      <h2 class="sec-h" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">No solo limpia.<br>Piensa.</h2>
+      <div class="intel-visual">
+        <div class="ring"></div><div class="ring r2"></div>
+        <img src="assets/tn70_screen.png" alt="Consola del robot con mapa en tiempo real">
+      </div>
+    </div>
+    <div class="intel-steps" id="intelSteps">
+      <div class="istep"><div class="num">01 — Navegación</div><h3>Algoritmos propios de navegación AI</h3><p>Localización avanzada y planificación dinámica de rutas. El software Never‑Lost™ 360 mantiene al robot ubicado incluso en entornos altamente dinámicos, sin perderse jamás.</p></div>
+      <div class="istep"><div class="num">02 — Percepción</div><h3>Sensores LiDAR y visión en tiempo real</h3><p>Detección inteligente de obstáculos y personas. El robot percibe su entorno en 360° y esquiva sin interrumpir la operación de la tienda o planta.</p></div>
+      <div class="istep"><div class="num">03 — Mapeo</div><h3>Cada metro queda mapeado y verificado</h3><p>Al terminar cada turno, el robot genera un mapa de cobertura con el recorrido exacto. La limpieza deja de ser una promesa: es un dato.</p></div>
+      <div class="istep"><div class="num">04 — Nube</div><h3>Gestión y reportes en la nube</h3><p>Monitoreo en tiempo real de toda la flota, reportes visuales de limpieza, actualizaciones OTA y análisis de datos. Nuestro equipo lo supervisa por ti, 24/7.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESORIOS -->
+<section class="sec-pad" style="padding-top:6vh">
+  <div class="wrap">
+    <div class="kicker reveal">Ecosistema</div>
+    <h2 class="sec-h reveal d1">Un robot, muchas capacidades.</h2>
+    <p class="sec-sub reveal d2">La plataforma TN70 admite módulos adicionales que se instalan en cualquier momento — al comprar o después.</p>
+    <div class="acc-grid">
+      <div class="acc reveal"><div class="ic">💨</div><h3>Nebulizador desinfectante</h3><p>Sanitización de ambientes mientras el robot recorre la instalación: protección adicional para operaciones críticas.</p></div>
+      <div class="acc reveal d1"><div class="ic">⚠️</div><h3>Foco de seguridad</h3><p>Haz azul frontal y barras rojas laterales para advertir presencia en bodegas de alto tráfico y proteger a tu equipo.</p></div>
+      <div class="acc reveal d2"><div class="ic">📷</div><h3>Cámara de seguridad</h3><p>Módulo de vigilancia móvil: tu robot patrulla y registra mientras limpia, sumando una capa de seguridad al recinto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso" class="sec-pad">
+  <div class="wrap">
+    <div class="kicker reveal">Cómo funciona</div>
+    <h2 class="sec-h reveal d1">De la visita al primer reporte,<br>en días — no meses.</h2>
+    <div class="steps">
+      <div class="pstep reveal"><h3>Visita y mapeo</h3><p>Evaluamos tu instalación y el robot construye su mapa con LiDAR: pasillos, obstáculos y zonas críticas.</p></div>
+      <div class="pstep reveal d1"><h3>Plan de rutas</h3><p>Definimos juntos rutas, horarios y modos de limpieza por zona, según el tráfico de tu operación.</p></div>
+      <div class="pstep reveal d2"><h3>Operación autónoma</h3><p>El robot ejecuta sus turnos solo: esquiva obstáculos, gestiona su batería y repite su plan cada día.</p></div>
+      <div class="pstep reveal d3"><h3>Reporte verificado</h3><p>Recibes mapas de cobertura y métricas de cada turno desde la nube, con el respaldo del equipo Tressa.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENCIA -->
+<section id="presencia" class="sec-pad">
+  <div class="wrap">
+    <div class="kicker reveal">Presencia</div>
+    <h2 class="sec-h reveal d1">De Aconcagua a Los Lagos.</h2>
+    <p class="sec-sub reveal d2">Nuestra flota opera de forma autónoma en instalaciones de retail, industria y distribución a lo largo de Chile, con soporte técnico de Tressa en terreno.</p>
+    <div class="map-stage reveal d2">
+      <div class="map-overlay">
+        <h3>Operación en todo Chile</h3>
+        <p>Ciudades con robots Tressa operando hoy:</p>
+        <div class="cities" id="cityChips"></div>
+      </div>
+      <div id="mapa"></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section id="resultados" class="sec-pad" style="padding-top:2vh">
+  <div class="wrap">
+    <div class="kicker reveal">Resultados</div>
+    <h2 class="sec-h reveal d1">La prueba está en el mapa.</h2>
+    <p class="sec-sub reveal d2">Mapas de cobertura reales generados por nuestra flota: cada trazo es un recorrido ejecutado y verificado por los sensores del robot.</p>
+    <div class="works">
+      <figure class="work reveal" data-img="assets/cobertura_industrial.png"><img src="assets/cobertura_industrial.png" alt="Mapa de cobertura - instalación industrial" loading="lazy"><figcaption class="cap2">Instalación industrial<small>Cobertura consolidada · turno nocturno</small></figcaption></figure>
+      <figure class="work reveal d1" data-img="assets/cobertura_retail.png"><img src="assets/cobertura_retail.png" alt="Mapa de cobertura - tienda retail" loading="lazy"><figcaption class="cap2">Tienda retail · gran formato<small>Pasillos de venta · operación diaria</small></figcaption></figure>
+      <figure class="work reveal d2" data-img="assets/cobertura_tienda.png"><img src="assets/cobertura_tienda.png" alt="Mapa de cobertura - superficie comercial" loading="lazy"><figcaption class="cap2">Superficie comercial<small>Recorrido autónomo verificado</small></figcaption></figure>
+    </div>
+    <p class="works-note reveal">— Por confidencialidad de nuestros clientes, los mapas se muestran sin identificar la instalación.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="sec-pad" style="padding-top:2vh">
+  <div class="wrap">
+    <div class="kicker reveal">Preguntas frecuentes</div>
+    <h2 class="sec-h reveal d1">Lo que todos preguntan.</h2>
+    <div class="faq reveal d2">
+      <div class="qa"><button>¿El robot puede operar con clientes en la tienda?<span class="chev">＋</span></button><div class="ans"><p>Sí. Los sensores LiDAR y de visión detectan personas y obstáculos en 360°, ajustando la ruta en tiempo real. El TN10‑PRO, además, opera bajo 65 dB — más silencioso que una conversación normal.</p></div></div>
+      <div class="qa"><button>¿Qué pasa si el robot se encuentra con un derrame o un pasillo bloqueado?<span class="chev">＋</span></button><div class="ans"><p>Replanifica la ruta automáticamente y registra la zona pendiente. Si la situación requiere intervención, la plataforma de monitoreo genera una alerta y nuestro equipo coordina la respuesta.</p></div></div>
+      <div class="qa"><button>¿Cómo sé que realmente limpió?<span class="chev">＋</span></button><div class="ans"><p>Cada turno genera un mapa de cobertura con el recorrido exacto, el área limpiada y la duración. Recibes reportes verificables desde la nube — la limpieza se convierte en un dato auditable.</p></div></div>
+      <div class="qa"><button>¿Necesito infraestructura especial?<span class="chev">＋</span></button><div class="ans"><p>No. El robot se adapta a tu instalación: solo requiere un punto de carga y, opcionalmente, estación de agua. Funciona sobre mármol, cerámica, cemento, epóxico, vinilo y más.</p></div></div>
+      <div class="qa"><button>¿Quién mantiene los robots?<span class="chev">＋</span></button><div class="ans"><p>Tressa. Nuestro programa de soporte integral incluye mantención, consumibles, actualizaciones OTA y un equipo técnico en terreno a lo largo de Chile.</p></div></div>
+      <div class="qa"><button>¿Puedo usar la pantalla publicitaria con mis propias campañas?<span class="chev">＋</span></button><div class="ans"><p>Sí. El contenido de la pantalla del Robot AD se gestiona de forma remota: promociones, contenido institucional o campañas de marca, programables por horario y zona de la tienda.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final" id="contacto">
+  <h2 class="reveal">Hablemos.</h2>
+  <p class="reveal d1">Agenda una demostración en tu instalación y mira a la flota trabajar desde el primer turno. Sin compromiso.</p>
+  <div class="ctas reveal d2">
+    <a class="btn btn-fill" href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Solicitar una demo</a>
+    <span class="btn btn-wsp" title="Canal de WhatsApp en habilitación">WhatsApp <span class="soon">PRONTO</span></span>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img src="assets/tressa_logo_white.png" alt="TRESSA">
+        <p>Empresa chilena con más de 30 años entregando soluciones de higiene y limpieza profesional. División Robótica: limpieza autónoma inteligente.</p>
+      </div>
+      <div>
+        <h4>Tressa</h4>
+        <a href="../index.html">Sitio principal</a>
+        <a href="../index.html#quienes-somos">Quiénes somos</a>
+        <a href="../index.html#kh7">KH7 Chile</a>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <a href="tel:+56228402900">+56 2 2840 2900</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Formulario de contacto</a>
+        <p style="margin-top:6px;font-size:.84rem">Santa Rita 3480, Parque Industrial Puerta Sur, San Bernardo, Santiago.</p>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© Tressa — Cambiando el concepto de la limpieza.</span>
+      <span>División Robótica</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb"><button class="x" id="lbX" aria-label="Cerrar">✕</button><img id="lbImg" alt="Mapa de cobertura ampliado"></div>
+
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.96/build/spline-viewer.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
