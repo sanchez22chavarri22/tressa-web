@@ -3,335 +3,715 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRESSA — Cambiando el concepto de la limpieza</title>
-<meta name="description" content="Tressa: más de 30 años en higiene y limpieza profesional. Productos químicos, KH7, Bonastre y robótica autónoma para retail e industria en Chile.">
+<title>TRESSA — Cambiamos el concepto de la limpieza</title>
+<meta name="description" content="Tressa: más de 30 años entregando soluciones integrales de higiene y limpieza industrial en Chile. No solo productos — un servicio completo y especializado: asesoría, fabricación, planta de envases propia, capacitación y soporte técnico permanente.">
+<link rel="canonical" href="https://sanchez22chavarri22.github.io/tressa-web/">
+<meta name="theme-color" content="#144C65">
+<meta property="og:title" content="TRESSA — Cambiamos el concepto de la limpieza">
+<meta property="og:description" content="Un servicio integral de higiene y limpieza industrial. Más de 30 años acompañando a cada cliente, de principio a fin.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:url" content="https://sanchez22chavarri22.github.io/tressa-web/">
+<meta property="og:image" content="https://sanchez22chavarri22.github.io/tressa-web/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TRESSA — Cambiamos el concepto de la limpieza">
+<meta name="twitter:description" content="Un servicio integral de higiene y limpieza industrial. Más de 30 años acompañando a cada cliente.">
+<meta name="twitter:image" content="https://sanchez22chavarri22.github.io/tressa-web/assets/og.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Tressa",
+  "alternateName": "Tressa Chile",
+  "url": "https://sanchez22chavarri22.github.io/tressa-web/",
+  "logo": "https://sanchez22chavarri22.github.io/tressa-web/assets/tressa-logo.png",
+  "image": "https://sanchez22chavarri22.github.io/tressa-web/assets/og.jpg",
+  "description": "Empresa chilena con más de 30 años dedicada a la elaboración, envasado y distribución de productos químicos para la limpieza y desinfección industrial, entregando un servicio integral y especializado en higiene.",
+  "foundingLocation": "Chile",
+  "telephone": "+56228402900",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Santa Rita 3480, Parque Industrial Puerta Sur",
+    "addressLocality": "San Bernardo",
+    "addressRegion": "Región Metropolitana",
+    "addressCountry": "CL"
+  },
+  "sameAs": [
+    "https://www.tressa.cl/",
+    "https://www.instagram.com/tressa.chile/"
+  ],
+  "knowsAbout": ["Higiene industrial","Limpieza y desinfección","Detergentes industriales","Robótica de limpieza"]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#04070D; --bg2:#080D16; --panel:#0C1320; --line:rgba(255,255,255,.08);
-  --text:#F5F7FA; --dim:#9AA7B8; --faint:#5C6B7E;
-  --teal:#26C6DA; --teal-deep:#0E7C95; --gold:#F0B429;
-  --grad:linear-gradient(110deg,#7BE3F2 0%,#26C6DA 45%,#3D7BFA 100%);
+  --ink:#0B2A38; --petrol:#144C65; --petrol-700:#0E3A4D; --petrol-900:#08222E;
+  --aqua:#1FB6CE; --aqua-bright:#35D0E6; --teal:#1B8FA6;
+  --mist:#F1F6F8; --mist-2:#E7F0F3; --paper:#FFFFFF;
+  --text:#11323F; --muted:#4C636E; --faint:#7A909B; --line:rgba(11,42,56,.10);
+  --gold:#E8A93B;
+  --grad:linear-gradient(115deg,#1FB6CE 0%,#144C65 70%);
+  --grad-aqua:linear-gradient(115deg,#35D0E6,#1FB6CE);
+  --shadow:0 24px 60px rgba(11,42,56,.14);
+  --shadow-sm:0 10px 30px rgba(11,42,56,.08);
+  --r:20px;
+  --maxw:1180px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,.dt{font-family:'Sora',sans-serif;line-height:1.12;letter-spacing:-.02em}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
-::selection{background:rgba(38,198,218,.35)}
-
-/* ── NAV ── */
-nav{position:fixed;inset:0 0 auto 0;z-index:1000;transition:.4s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(4,7,13,.72);backdrop-filter:blur(20px) saturate(1.4);border-color:var(--line)}
-.nav-in{max-width:1240px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:30px}
-.brand img{height:26px;width:auto}
-.nav-links{margin-left:auto;display:flex;gap:24px;font-size:.86rem;font-weight:500;color:var(--dim)}
-.nav-links a{transition:color .25s}
-.nav-links a:hover{color:#fff}
-.nav-cta{font-size:.84rem;font-weight:600;background:rgba(255,255,255,.1);border:1px solid var(--line);padding:8px 18px;border-radius:99px;transition:.25s}
-.nav-cta:hover{background:var(--teal);color:#04121A;border-color:var(--teal)}
-@media(max-width:920px){.nav-links{display:none}}
-
-/* ── HERO con piso 3D animado ── */
-.hero{min-height:100vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:120px 28px 90px}
-.aurora{position:absolute;inset:0;background:
-  radial-gradient(900px 480px at 18% 12%,rgba(38,198,218,.13),transparent 60%),
-  radial-gradient(800px 520px at 85% 20%,rgba(61,123,250,.12),transparent 60%)}
-.floor{position:absolute;inset:auto 0 0 0;height:58vh;perspective:900px;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,black 45%);mask-image:linear-gradient(180deg,transparent 0%,black 45%)}
-.floor .grid{position:absolute;inset:-60% -40% 0;transform:rotateX(62deg);transform-origin:bottom;
-  background-image:repeating-linear-gradient(to bottom,rgba(38,198,218,.22) 0 1px,transparent 1px 64px),
-                   repeating-linear-gradient(to right,rgba(38,198,218,.22) 0 1px,transparent 1px 64px);
-  animation:gridmove 7s linear infinite}
-@keyframes gridmove{to{background-position:0 64px,0 0}}
-.floor::after{content:"";position:absolute;inset:auto 0 0 0;height:100%;background:radial-gradient(60% 90% at 50% 100%,rgba(38,198,218,.14),transparent 70%)}
-.hero-eyebrow{position:relative;display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(38,198,218,.35);background:rgba(38,198,218,.07);border-radius:99px;padding:8px 20px;margin-bottom:30px;opacity:0;animation:rise 1s .2s forwards}
-.hero-eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:#34D399;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pls 2s infinite}
-@keyframes pls{70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}}
-.hero h1{position:relative;font-size:clamp(2.8rem,7.4vw,5.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.03;opacity:0;animation:rise 1s .35s forwards}
-.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{position:relative;margin-top:24px;font-size:clamp(1rem,1.5vw,1.25rem);color:var(--dim);max-width:640px;opacity:0;animation:rise 1s .5s forwards}
-.hero-ctas{position:relative;display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;justify-content:center;opacity:0;animation:rise 1s .65s forwards}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:99px;font-weight:600;font-size:1rem;transition:.25s;cursor:pointer;border:none;font-family:inherit}
-.btn-fill{background:var(--grad);color:#031018;box-shadow:0 10px 36px rgba(38,198,218,.3)}
-.btn-fill:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 48px rgba(38,198,218,.48)}
-.btn-ghost{background:rgba(255,255,255,.07);color:#fff;border:1px solid var(--line);backdrop-filter:blur(8px)}
-.btn-ghost:hover{background:rgba(255,255,255,.14)}
-@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
-.hero-stats{position:relative;margin-top:8vh;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:min(980px,92vw);opacity:0;animation:rise 1.1s .85s forwards}
-.hstat{background:rgba(12,19,32,.55);border:1px solid var(--line);border-radius:18px;padding:22px;backdrop-filter:blur(10px)}
-.hstat .n{font-size:1.9rem;font-weight:800;letter-spacing:-.03em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hstat .l{color:var(--dim);font-size:.84rem;margin-top:4px}
-@media(max-width:860px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
-
-/* ── GENERAL ── */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+::selection{background:rgba(31,182,206,.3)}
 section{position:relative}
-.sec-pad{padding:12vh 0}
-.kicker{font-size:.76rem;font-weight:600;letter-spacing:.36em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
-.sec-h{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:800;letter-spacing:-.03em;line-height:1.08}
-.sec-sub{margin-top:16px;color:var(--dim);font-size:1.06rem;max-width:580px}
-.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+
+/* ───── TOP BAR ───── */
+.topbar{background:var(--petrol-900);color:#cfe2e9;font-size:.8rem}
+.topbar .wrap{display:flex;align-items:center;gap:20px;padding:8px 26px;min-height:38px}
+.topbar a{display:inline-flex;align-items:center;gap:7px;transition:color .2s}
+.topbar a:hover{color:#fff}
+.topbar .sep{margin-left:auto}
+.topbar .socials{display:flex;gap:14px}
+@media(max-width:680px){.topbar .hidem{display:none}}
+
+/* ───── NAV ───── */
+nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.82);backdrop-filter:blur(18px) saturate(1.3);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 8px 30px rgba(11,42,56,.08)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:13px 26px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:11px;flex:none}
+.brand img{height:34px;width:auto}
+.nav-links{margin-left:auto;display:flex;gap:26px;font-size:.92rem;font-weight:500;color:var(--text)}
+.nav-links a{position:relative;padding:4px 0;transition:color .2s}
+.nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--grad-aqua);transition:right .28s ease}
+.nav-links a:hover{color:var(--petrol)}
+.nav-links a:hover::after{right:0}
+.nav-cta{flex:none;font-size:.9rem;font-weight:600;color:#fff;background:var(--petrol);padding:11px 22px;border-radius:99px;transition:.25s}
+.nav-cta:hover{background:var(--aqua);transform:translateY(-1px);box-shadow:0 10px 24px rgba(31,182,206,.34)}
+.burger{display:none;flex:none;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:none;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.burger span{width:18px;height:2px;background:var(--petrol);border-radius:2px;transition:.3s}
+@media(max-width:880px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:flex}
+  .nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#fff;padding:18px 26px;gap:6px;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+  .nav-links.open a{padding:11px 0;border-bottom:1px solid var(--line)}
+}
+
+/* ───── HERO ───── */
+.hero{position:relative;min-height:94vh;display:flex;align-items:center;overflow:hidden;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;animation:kenburns 24s infinite}
+.hero-bg .slide:nth-child(1){animation-delay:0s}
+.hero-bg .slide:nth-child(2){animation-delay:6s}
+.hero-bg .slide:nth-child(3){animation-delay:12s}
+.hero-bg .slide:nth-child(4){animation-delay:18s}
+@keyframes kenburns{
+  0%{opacity:0;transform:scale(1.12)}
+  6%{opacity:1}
+  25%{opacity:1;transform:scale(1)}
+  31%{opacity:0;transform:scale(1)}
+  100%{opacity:0}
+}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(100deg,rgba(8,34,46,.94) 0%,rgba(20,76,101,.82) 42%,rgba(20,76,101,.34) 100%),
+  linear-gradient(0deg,rgba(8,34,46,.7),transparent 55%)}
+.hero-grain{position:absolute;inset:0;z-index:1;opacity:.4;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:4px 4px}
+.hero-in{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:120px 26px 90px;width:100%}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#bfe9f1;border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.06);padding:8px 18px;border-radius:99px;margin-bottom:26px;opacity:0;animation:up .9s .2s forwards}
+.hero-eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--aqua-bright);box-shadow:0 0 0 0 rgba(53,208,230,.6);animation:pls 2s infinite}
+@keyframes pls{70%{box-shadow:0 0 0 9px rgba(53,208,230,0)}}
+.hero h1{font-size:clamp(2.6rem,6vw,5rem);font-weight:800;max-width:14ch;opacity:0;animation:up .9s .35s forwards}
+.hero h1 em{font-style:normal;background:linear-gradient(110deg,#7BE9F8,#35D0E6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{margin-top:24px;font-size:clamp(1.05rem,1.7vw,1.32rem);max-width:60ch;color:#dceaef;opacity:0;animation:up .9s .5s forwards}
+.hero-ctas{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;opacity:0;animation:up .9s .65s forwards}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:99px;font-weight:600;font-size:1rem;font-family:inherit;border:none;cursor:pointer;transition:.25s}
+.btn-fill{background:var(--grad-aqua);color:#06222c;box-shadow:0 12px 34px rgba(31,182,206,.36)}
+.btn-fill:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(31,182,206,.5)}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(6px)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:42px;opacity:0;animation:up .9s .8s forwards}
+.hero-tags span{font-size:.82rem;color:#cfe6ec;border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:7px 15px;display:inline-flex;gap:8px;align-items:center}
+.hero-tags span::before{content:"✓";color:var(--aqua-bright);font-weight:700}
+.hero-scroll{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.7);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2.4s ease-in-out infinite}
+.hero-scroll i{width:1px;height:26px;background:linear-gradient(rgba(255,255,255,.7),transparent)}
+@keyframes up{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ───── STATS ───── */
+.stats{background:var(--petrol-900);color:#fff}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:38px 26px}
+.stat{text-align:center;padding:8px 16px;border-right:1px solid rgba(255,255,255,.1)}
+.stat:last-child{border-right:none}
+.stat .n{font-family:'Sora';font-size:clamp(1.8rem,3.4vw,2.7rem);font-weight:800;background:linear-gradient(110deg,#7BE9F8,#35D0E6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{color:#a9c4cd;font-size:.86rem;margin-top:4px}
+@media(max-width:760px){.stats .wrap{grid-template-columns:1fr 1fr;gap:24px 10px}.stat:nth-child(2){border-right:none}}
+
+/* ───── SECTION HEADER ───── */
+.sec{padding:120px 0}
+.sec-head{max-width:680px;margin-bottom:54px}
+.sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:.76rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.kicker::before{content:"";width:26px;height:2px;background:var(--grad-aqua);border-radius:2px}
+.sec-head.center .kicker::before{display:none}
+.sec-h{font-size:clamp(1.9rem,4vw,3rem);font-weight:800;color:var(--ink)}
+.sec-h em{font-style:normal;color:var(--petrol);position:relative}
+.sec-sub{margin-top:18px;color:var(--muted);font-size:1.08rem}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
 .reveal.vis{opacity:1;transform:none}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
 
-/* ── QUIÉNES SOMOS ── */
-.who{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
-.who-cards{display:grid;gap:16px}
-.wcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;transition:.3s}
-.wcard:hover{border-color:rgba(38,198,218,.45);transform:translateY(-3px)}
-.wcard h3{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;margin-bottom:10px}
-.wcard h3 .ic{width:34px;height:34px;border-radius:10px;background:rgba(38,198,218,.12);display:grid;place-items:center;font-size:1rem}
-.wcard p{color:var(--dim);font-size:.95rem}
-@media(max-width:880px){.who{grid-template-columns:1fr;gap:40px}}
+/* ───── QUIÉNES SOMOS ───── */
+#empresa{background:var(--mist)}
+.about{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+.about-media{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+.about-media img{width:100%;height:520px;object-fit:cover;transition:transform 1.2s ease}
+.about-media:hover img{transform:scale(1.05)}
+.about-media .tagchip{position:absolute;left:22px;bottom:22px;background:rgba(8,34,46,.78);backdrop-filter:blur(8px);color:#fff;padding:14px 20px;border-radius:14px;font-size:.9rem;border:1px solid rgba(255,255,255,.14)}
+.about-media .tagchip b{display:block;font-family:'Sora';font-size:1.5rem;color:var(--aqua-bright)}
+.mv{display:grid;gap:18px;margin-top:30px}
+.mv-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;transition:.3s}
+.mv-card:hover{border-color:rgba(31,182,206,.45);box-shadow:var(--shadow-sm);transform:translateY(-3px)}
+.mv-card h3{display:flex;align-items:center;gap:11px;font-size:1.15rem;color:var(--petrol);margin-bottom:9px}
+.mv-card h3 .ic{width:38px;height:38px;border-radius:11px;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:1.05rem;flex:none}
+.mv-card p{color:var(--muted);font-size:.97rem}
+@media(max-width:880px){.about{grid-template-columns:1fr;gap:40px}.about-media img{height:360px}}
 
-/* ── SOLUCIONES BENTO ── */
-#soluciones{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.bento{margin-top:60px;display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
-.bcard{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;position:relative;overflow:hidden;transition:.35s;grid-column:span 2}
-.bcard.wide{grid-column:span 3}
-.bcard:hover{border-color:rgba(38,198,218,.5);transform:translateY(-4px);box-shadow:0 24px 50px rgba(0,0,0,.45)}
-.bcard::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 200px at var(--mx,50%) var(--my,0%),rgba(38,198,218,.1),transparent 70%);opacity:0;transition:opacity .4s}
-.bcard:hover::before{opacity:1}
-.bcard .ic{width:44px;height:44px;border-radius:13px;background:rgba(38,198,218,.12);border:1px solid rgba(38,198,218,.25);display:grid;place-items:center;font-size:1.25rem;margin-bottom:18px}
-.bcard h3{font-size:1.12rem;font-weight:700;margin-bottom:8px}
-.bcard p{color:var(--dim);font-size:.92rem}
-@media(max-width:880px){.bento{grid-template-columns:1fr}.bcard,.bcard.wide{grid-column:span 1}}
+/* ───── SERVICIO INTEGRAL (dark) ───── */
+#servicio{background:linear-gradient(170deg,var(--petrol) 0%,var(--petrol-900) 100%);color:#fff;overflow:hidden}
+#servicio .kicker{color:#7fe3f2}
+#servicio .kicker::before{background:var(--aqua-bright)}
+#servicio .sec-h{color:#fff}
+#servicio .sec-h em{color:var(--aqua-bright)}
+#servicio .sec-sub{color:#c4dde4}
+.serv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+.serv-card{position:relative;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:30px 26px;overflow:hidden;transition:.32s}
+.serv-card::before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,0%),rgba(53,208,230,.16),transparent 70%);opacity:0;transition:opacity .4s}
+.serv-card:hover{border-color:rgba(53,208,230,.5);transform:translateY(-4px)}
+.serv-card:hover::before{opacity:1}
+.serv-card .num{font-family:'Sora';font-size:.82rem;font-weight:700;color:var(--aqua-bright);letter-spacing:.1em}
+.serv-card .ic{width:50px;height:50px;border-radius:14px;background:rgba(53,208,230,.14);border:1px solid rgba(53,208,230,.3);display:grid;place-items:center;font-size:1.4rem;margin:14px 0 16px}
+.serv-card h3{font-size:1.16rem;color:#fff;margin-bottom:9px}
+.serv-card p{color:#bcd6dd;font-size:.94rem}
+.serv-foot{margin-top:34px;text-align:center;color:#bcd6dd;font-size:1.05rem}
+.serv-foot b{color:#fff}
+@media(max-width:880px){.serv-grid{grid-template-columns:1fr}}
 
-/* ── KH7 ── */
-.kh7{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.kh7-visual{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:26px;min-height:380px}
-.kh7-visual::before{content:"";position:absolute;inset:18% 8% 0;background:radial-gradient(ellipse at center,rgba(240,180,41,.14),transparent 65%);filter:blur(28px)}
-.kh7-visual img{position:relative;height:330px;width:auto;filter:drop-shadow(0 34px 50px rgba(0,0,0,.6));transition:transform .4s}
-.kh7-visual img:last-child{height:290px}
-.kh7-visual:hover img{transform:translateY(-8px)}
-.kh7-visual:hover img:last-child{transform:translateY(-16px)}
-.kh7-logo{height:54px;width:auto;margin-bottom:24px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4))}
-.tagline{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(240,180,41,.4);border-radius:99px;padding:6px 16px;margin-bottom:20px}
-.kh7 .feats{margin-top:30px;display:grid;gap:14px}
-.feat{display:flex;gap:14px;align-items:flex-start}
-.feat .dot{margin-top:7px;width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none;box-shadow:0 0 10px rgba(240,180,41,.6)}
-.feat b{display:block;font-size:.98rem}
-.feat span{color:var(--dim);font-size:.9rem}
-@media(max-width:880px){.kh7{grid-template-columns:1fr}}
+/* ───── SOLUCIONES ───── */
+.sol-filter{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:34px}
+.chip{font-size:.86rem;font-weight:500;color:var(--muted);border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 18px;cursor:pointer;transition:.22s}
+.chip:hover{border-color:var(--aqua);color:var(--petrol)}
+.chip.active{background:var(--petrol);color:#fff;border-color:var(--petrol)}
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sol{position:relative;border-radius:22px;overflow:hidden;min-height:330px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;box-shadow:var(--shadow-sm);transition:.4s;cursor:default}
+.sol:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.sol .ph{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1s ease}
+.sol:hover .ph{transform:scale(1.08)}
+.sol.grad .ph{background:var(--grad)}
+.sol .shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,34,46,.92) 0%,rgba(8,34,46,.5) 40%,rgba(8,34,46,.12) 100%)}
+.sol .body{position:relative;padding:26px 24px}
+.sol .ic{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-size:1.3rem;margin-bottom:14px}
+.sol h3{font-size:1.24rem;margin-bottom:8px}
+.sol p{color:#d3e6eb;font-size:.92rem;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s ease,opacity .4s ease,margin .4s}
+.sol:hover p{max-height:130px;opacity:1;margin-top:4px}
+@media(hover:none){.sol p{max-height:160px;opacity:1;margin-top:4px}}
+.sol .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.sol .meta b{font-size:.72rem;font-weight:600;color:#bfeaf2;background:rgba(255,255,255,.12);border-radius:99px;padding:4px 10px}
+@media(max-width:880px){.sol-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.sol-grid{grid-template-columns:1fr}}
 
-/* ── ROBÓTICA FEATURE ── */
-.robo{position:relative;border-radius:30px;overflow:hidden;border:1px solid rgba(38,198,218,.3);background:
-  radial-gradient(700px 400px at 80% 30%,rgba(38,198,218,.16),transparent 65%),
-  linear-gradient(140deg,#0A1422,#04070D 70%)}
-.robo-in{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:64px}
-.robo h2{font-size:clamp(1.9rem,3.8vw,3rem);font-weight:800;letter-spacing:-.03em;line-height:1.08}
-.robo h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.robo p{margin-top:18px;color:var(--dim);max-width:480px}
-.robo .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
-.robo .chip{font-size:.78rem;font-weight:600;color:var(--teal);border:1px solid rgba(38,198,218,.35);border-radius:99px;padding:6px 14px}
-.robo img{width:min(420px,90%);margin:0 auto;filter:drop-shadow(0 46px 70px rgba(0,0,0,.7)) drop-shadow(0 0 60px rgba(38,198,218,.12))}
-@media(max-width:880px){.robo-in{grid-template-columns:1fr;padding:40px 28px}}
+/* ───── CADENA DE VALOR ───── */
+#cadena{background:var(--mist)}
+.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:10px;counter-reset:step}
+.chain-card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.32s;position:relative}
+.chain-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.chain-card .ph{height:170px;background-size:cover;background-position:center}
+.chain-card .ph.flat{background:var(--grad);display:grid;place-items:center}
+.chain-card .ph.flat .big{font-size:2.6rem;opacity:.92}
+.chain-card .body{padding:24px}
+.chain-card .body::before{counter-increment:step;content:"0" counter(step);font-family:'Sora';font-weight:800;font-size:1.1rem;color:var(--aqua);display:block;margin-bottom:8px}
+.chain-card h3{font-size:1.12rem;color:var(--ink);margin-bottom:8px}
+.chain-card p{color:var(--muted);font-size:.92rem}
+@media(max-width:880px){.chain{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.chain{grid-template-columns:1fr}}
 
-/* ── CLIENTES MARQUEE ── */
-.marquee{margin-top:54px;position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent);mask-image:linear-gradient(90deg,transparent,black 12%,black 88%,transparent)}
-.mq-track{display:flex;gap:18px;width:max-content;animation:mq 36s linear infinite}
+/* ───── MARCAS ───── */
+.brands{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.brand-feat{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#0d3d52,#08222e);color:#fff;padding:40px;display:flex;flex-direction:column;justify-content:space-between;min-height:340px}
+.brand-feat .bg{position:absolute;inset:0;background:url('assets/marcas/kh7-productos.png') no-repeat right -10px bottom -10px;background-size:62%;opacity:.16}
+.brand-feat .tag{position:relative;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9fe7f2}
+.brand-feat h3{position:relative;font-size:2rem;margin:10px 0}
+.brand-feat p{position:relative;color:#cfe4ea;max-width:42ch}
+.brand-feat .pills{position:relative;display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.brand-feat .pills span{font-size:.76rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:5px 12px}
+.brand-side{display:grid;gap:20px}
+.brand-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;transition:.3s}
+.brand-card:hover{border-color:rgba(31,182,206,.45);box-shadow:var(--shadow-sm);transform:translateY(-3px)}
+.brand-card .bh{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.brand-card .bh .badge{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:var(--mist-2);border-radius:99px;padding:4px 10px}
+.brand-card h3{font-size:1.18rem;color:var(--ink)}
+.brand-card p{color:var(--muted);font-size:.92rem;margin-top:4px}
+.brands-row{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:880px){.brands{grid-template-columns:1fr}.brands-row{grid-template-columns:1fr}}
+
+/* ───── CERTIFICACIONES ───── */
+#certificaciones{background:linear-gradient(170deg,var(--petrol-900),var(--petrol));color:#fff}
+#certificaciones .kicker{color:#7fe3f2}#certificaciones .kicker::before{background:var(--aqua-bright)}
+#certificaciones .sec-h{color:#fff}#certificaciones .sec-sub{color:#c4dde4}
+.cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px}
+.cert{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:28px 24px;text-align:center;transition:.3s}
+.cert:hover{border-color:rgba(53,208,230,.5);transform:translateY(-4px);background:rgba(255,255,255,.08)}
+.cert .seal{width:64px;height:64px;margin:0 auto 16px;border-radius:50%;border:2px solid var(--aqua-bright);display:grid;place-items:center;font-family:'Sora';font-weight:800;color:var(--aqua-bright);font-size:.78rem;letter-spacing:.02em}
+.cert h3{font-size:1.02rem;color:#fff;margin-bottom:6px}
+.cert p{color:#aecdd6;font-size:.84rem}
+@media(max-width:880px){.cert-grid{grid-template-columns:1fr 1fr}}
+
+/* ───── ROBÓTICA BANNER ───── */
+.robo-band{padding:0}
+.robo{position:relative;border-radius:0;overflow:hidden;background:radial-gradient(800px 400px at 78% 30%,rgba(31,182,206,.22),transparent 60%),linear-gradient(135deg,#04141d,#08222e)}
+.robo-in{max-width:var(--maxw);margin:0 auto;padding:90px 26px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;color:#fff}
+.robo .kicker{color:#7fe3f2}.robo .kicker::before{background:var(--aqua-bright)}
+.robo h2{font-size:clamp(1.9rem,3.6vw,2.8rem);font-weight:800}
+.robo h2 em{font-style:normal;background:linear-gradient(110deg,#7BE9F8,#35D0E6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.robo p{color:#cfe4ea;margin-top:16px;max-width:48ch}
+.robo .chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
+.robo .chips span{font-size:.8rem;color:#bfeaf2;border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:6px 13px}
+.robo-visual{position:relative;display:flex;justify-content:center}
+.robo-visual img{width:min(420px,90%);filter:drop-shadow(0 40px 60px rgba(0,0,0,.6))}
+.robo-visual .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:360px;height:360px;border:1px dashed rgba(53,208,230,.4);border-radius:50%;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(max-width:880px){.robo-in{grid-template-columns:1fr;text-align:center}.robo .chips{justify-content:center}.robo-visual .ring{display:none}}
+
+/* ───── CLIENTES ───── */
+#clientes{background:var(--mist)}
+.marquee{margin-top:46px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;gap:14px;width:max-content;animation:mq 44s linear infinite}
+.mq-track.r2{animation-duration:52s;animation-direction:reverse;margin-top:14px}
 .marquee:hover .mq-track{animation-play-state:paused}
-.mq-track.rev{animation:mqr 42s linear infinite;margin-top:18px}
 @keyframes mq{to{transform:translateX(-50%)}}
-@keyframes mqr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-.client{flex:none;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 28px;font-weight:700;font-size:1.02rem;color:var(--dim);letter-spacing:.02em;transition:.3s}
-.client:hover{color:#fff;border-color:rgba(38,198,218,.45)}
-.client .cd{width:8px;height:8px;border-radius:50%;background:var(--teal);opacity:.7}
+.client{flex:none;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 26px;font-family:'Sora';font-weight:600;font-size:1.02rem;color:var(--petrol);transition:.25s}
+.client:hover{border-color:var(--aqua);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.client .cd{width:7px;height:7px;border-radius:50%;background:var(--aqua)}
 
-/* ── CONTACTO ── */
-.final{padding:16vh 28px;text-align:center;position:relative;overflow:hidden}
-.final::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 420px at 50% 115%,rgba(38,198,218,.16),transparent 70%)}
-.final h2{position:relative;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;letter-spacing:-.035em}
-.final p{position:relative;margin:20px auto 0;color:var(--dim);font-size:1.1rem;max-width:560px}
-.final .ctas{position:relative;margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.contact-cards{position:relative;margin:60px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:880px}
-.ccard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;font-size:.92rem;color:var(--dim)}
-.ccard b{display:block;color:var(--text);margin-bottom:6px;font-size:.95rem}
-@media(max-width:760px){.contact-cards{grid-template-columns:1fr}}
+/* ───── CONTACTO ───── */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:stretch}
+.contact-info h2{font-size:clamp(1.9rem,3.6vw,2.7rem);color:var(--ink);font-weight:800}
+.contact-info .sec-sub{margin-bottom:30px}
+.cinfo{display:grid;gap:14px;margin-top:8px}
+.cinfo a,.cinfo div{display:flex;align-items:flex-start;gap:14px;color:var(--text);font-size:.98rem;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;transition:.25s}
+.cinfo a:hover{border-color:var(--aqua);box-shadow:var(--shadow-sm)}
+.cinfo .ic{width:42px;height:42px;flex:none;border-radius:11px;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:1.05rem}
+.cinfo b{display:block;color:var(--ink);font-family:'Sora';font-size:.92rem}
+.cinfo small{color:var(--muted)}
+.cform{background:#fff;border:1px solid var(--line);border-radius:24px;padding:14px;box-shadow:var(--shadow-sm);overflow:hidden}
+.cform iframe{width:100%;height:660px;border:0;border-radius:16px;display:block}
+.cform .fallback{text-align:center;font-size:.85rem;color:var(--muted);padding:10px 6px 4px}
+.cform .fallback a{color:var(--teal);font-weight:600}
+@media(max-width:880px){.contact{grid-template-columns:1fr;gap:36px}}
 
-/* ── FOOTER ── */
-footer{border-top:1px solid var(--line);padding:54px 0;background:var(--bg2)}
-.foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;font-size:.9rem;color:var(--dim)}
-.foot img{height:24px;margin-bottom:16px}
-.foot h4{color:var(--text);font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
-.foot a{display:block;margin-bottom:9px;transition:color .2s}
-.foot a:hover{color:var(--teal)}
-.foot-base{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--faint);font-size:.8rem}
-@media(max-width:880px){.foot{grid-template-columns:1fr 1fr}}
+/* ───── FOOTER ───── */
+footer{background:var(--petrol-900);color:#a9c4cd;padding:64px 0 30px}
+.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.foot .brand img{height:30px;margin-bottom:18px}
+.foot p{font-size:.92rem;line-height:1.7}
+.foot h5{color:#fff;font-family:'Sora';font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px}
+.foot a{display:block;margin-bottom:10px;font-size:.92rem;transition:color .2s}
+.foot a:hover{color:var(--aqua-bright)}
+.foot-base{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.84rem;color:#7e9aa4}
+@media(max-width:880px){.foot{grid-template-columns:1fr 1fr;gap:30px}}
+@media(max-width:520px){.foot{grid-template-columns:1fr}}
+
+/* back to top */
+.totop{position:fixed;right:22px;bottom:22px;z-index:900;width:48px;height:48px;border-radius:50%;background:var(--petrol);color:#fff;border:none;cursor:pointer;font-size:1.1rem;opacity:0;pointer-events:none;transform:translateY(10px);transition:.3s;box-shadow:var(--shadow)}
+.totop.show{opacity:1;pointer-events:auto;transform:none}
+.totop:hover{background:var(--aqua)}
+
+/* ── fallbacks de imagen (evitan bloques vacíos si una foto falla) ── */
+.hero-bg .slide{background-color:var(--petrol-900)}
+.sol .ph{background-color:var(--petrol-700)}
+.chain-card .ph{background-color:var(--mist-2)}
+.about-media{background:var(--petrol-700)}
+
+/* ── contraste en secciones oscuras (AA) ── */
+.serv-card p{color:#cfe3e9}
+.cert p{color:#c3d8df}
+.brand-feat p{color:#d8eaef}
+.robo p{color:#d8eaef}
+#servicio .sec-sub,#certificaciones .sec-sub{color:#d2e4ea}
+.foot p,footer a{color:#bcd2da}
+.foot-base{color:#9fb6bf}
+
+/* ── foco visible para teclado ── */
+a:focus-visible,button:focus-visible,.chip:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--aqua-bright);outline-offset:2px;border-radius:6px}
+
+/* ── respeto a usuarios con movimiento reducido ── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .hero-bg .slide:first-child{opacity:1!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
 <body>
 
-<nav id="nav">
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <a href="tel:+56228402900">☎ +56 2 2840 2900</a>
+    <a class="hidem" href="https://maps.google.com/?q=Santa+Rita+3480+San+Bernardo+Santiago" target="_blank" rel="noopener">📍 San Bernardo, Santiago</a>
+    <span class="sep"></span>
+    <div class="socials">
+      <a href="https://www.instagram.com/tressa.chile/" target="_blank" rel="noopener" title="Instagram">Instagram</a>
+      <a href="https://www.tressa.cl/" target="_blank" rel="noopener" title="Sitio actual" class="hidem">tressa.cl</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav" aria-label="Navegación principal">
   <div class="nav-in">
-    <a class="brand" href="#inicio"><img src="robots/assets/tressa_logo_white.png" alt="TRESSA"></a>
-    <div class="nav-links">
-      <a href="#quienes-somos">Quiénes somos</a>
+    <a class="brand" href="#inicio"><img src="assets/tressa-logo.png" alt="TRESSA"></a>
+    <div class="nav-links" id="navlinks">
+      <a href="#empresa">Empresa</a>
+      <a href="#servicio">Servicio integral</a>
       <a href="#soluciones">Soluciones</a>
-      <a href="#kh7">KH7</a>
+      <a href="#cadena">Capacidades</a>
+      <a href="#marcas">Marcas</a>
       <a href="robots/index.html">Robótica</a>
-      <a href="#clientes">Clientes</a>
       <a href="#contacto">Contacto</a>
     </div>
     <a class="nav-cta" href="#contacto">Hablemos</a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-controls="navlinks" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
+<main>
 <!-- HERO -->
 <header class="hero" id="inicio">
-  <div class="aurora"></div>
-  <div class="floor"><div class="grid"></div></div>
-  <span class="hero-eyebrow"><span class="pulse"></span>Más de 30 años de trayectoria</span>
-  <h1>Cambiando el concepto<br>de la <em>limpieza.</em></h1>
-  <p>Elaboración, envasado y distribución de soluciones de higiene profesional — y ahora, una flota de robots autónomos con inteligencia artificial operando en todo Chile.</p>
-  <div class="hero-ctas">
-    <a class="btn btn-fill" href="robots/index.html">Conocer la División Robótica ⟶</a>
-    <a class="btn btn-ghost" href="#soluciones">Nuestras soluciones</a>
+  <div class="hero-bg">
+    <div class="slide" style="background-image:url('assets/fotos/desinfeccion-industrial.jpg')"></div>
+    <div class="slide" style="background-image:url('assets/fotos/limpieza-superficies.jpg')"></div>
+    <div class="slide" style="background-image:url('assets/fotos/limpieza-oficinas.jpg')"></div>
+    <div class="slide" style="background-image:url('assets/fotos/hoteleria.jpg')"></div>
   </div>
-  <div class="hero-stats">
-    <div class="hstat"><div class="n" data-count="30" data-prefix="+">0</div><div class="l">años en el mercado</div></div>
-    <div class="hstat"><div class="n" data-count="100" data-suffix="%">0</div><div class="l">cobertura nacional</div></div>
-    <div class="hstat"><div class="n" data-count="40" data-prefix="+">0</div><div class="l">robots autónomos</div></div>
-    <div class="hstat"><div class="n">KH7</div><div class="l">distribuidor exclusivo en Chile</div></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-in">
+    <div class="hero-eyebrow"><span class="pulse"></span>Empresa chilena · Más de 30 años</div>
+    <h1>Cambiamos el concepto de la <em>limpieza.</em></h1>
+    <p class="lead">No solo fabricamos y distribuimos productos: entregamos un <strong style="color:#fff">servicio integral y especializado en higiene</strong> que acompaña a cada cliente de principio a fin — desde la asesoría y el equipamiento, hasta la capacitación y el soporte técnico permanente.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-fill" href="#servicio">Conoce nuestro servicio →</a>
+      <a class="btn btn-ghost" href="#soluciones">Ver soluciones por industria</a>
+    </div>
+    <div class="hero-tags">
+      <span>Asesoría especializada</span>
+      <span>Planta y marcas propias</span>
+      <span>Soporte técnico permanente</span>
+    </div>
   </div>
+  <div class="hero-scroll">Desliza<i></i></div>
 </header>
 
+<!-- STATS -->
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="n" data-count="30" data-suffix="+">0</div><div class="l">años de trayectoria</div></div>
+    <div class="stat"><div class="n" data-count="6">0</div><div class="l">pasos de servicio integral</div></div>
+    <div class="stat"><div class="n" data-count="4">0</div><div class="l">certificaciones y normas</div></div>
+    <div class="stat"><div class="n" data-count="26" data-suffix="+">0</div><div class="l">grandes clientes y marcas</div></div>
+  </div>
+</div>
+
 <!-- QUIÉNES SOMOS -->
-<section id="quienes-somos" class="sec-pad">
-  <div class="wrap who">
+<section class="sec" id="empresa">
+  <div class="wrap about">
+    <div class="about-media reveal">
+      <img src="assets/fotos/edificio-tressa.jpg" alt="Planta y oficinas de Tressa en San Bernardo" loading="lazy" width="800" height="500">
+      <div class="tagchip"><b>San Bernardo</b>Parque Industrial Puerta Sur · Santiago</div>
+    </div>
     <div>
       <div class="kicker reveal">Quiénes somos</div>
-      <h2 class="sec-h reveal d1">Una empresa chilena,<br>una obsesión: la higiene.</h2>
-      <p class="sec-sub reveal d2">Tressa elabora, envasa y distribuye productos químicos para la limpieza y desinfección industrial. Más de tres décadas de presencia en el mercado nacional e internacional, con el mejor equipo de profesionales.</p>
-      <p class="sec-sub reveal d3" style="margin-top:12px">Innovación constante, fabricación de marcas propias, desarrollo de productos a medida y productos certificados — desde nuestra planta en San Bernardo, Santiago.</p>
+      <h2 class="sec-h reveal d1">Una empresa chilena que trata la higiene como un servicio, no como un producto.</h2>
+      <p class="sec-sub reveal d2">Elaboramos, envasamos y distribuimos productos químicos para la limpieza y desinfección industrial. Más de 30 años en el mercado nacional e internacional, con el mejor equipo de profesionales, creando soluciones que dan respuesta rápida y efectiva a cada necesidad de higiene.</p>
+      <div class="mv">
+        <div class="mv-card reveal d2"><h3><span class="ic">◎</span>Misión</h3><p>Entregar soluciones de higiene y limpieza a través de la comercialización y distribución de nuestros productos, ofreciendo apoyo post‑venta para su óptima utilización, con compromiso y capacitación permanente en todos los sectores que lo requieran.</p></div>
+        <div class="mv-card reveal d3"><h3><span class="ic">◈</span>Visión</h3><p>Ser la empresa líder en diseño, fabricación y distribución de detergentes y desinfectantes industriales a nivel nacional — reconocida por su calidad, oportunidad de entrega, credibilidad y alta capacidad técnica; ágil, cercana y en alianza con sus clientes.</p></div>
+      </div>
     </div>
-    <div class="who-cards">
-      <div class="wcard reveal d1"><h3><span class="ic">◎</span>Misión</h3><p>Entregar soluciones de higiene y limpieza a nuestros clientes mediante la comercialización y distribución de nuestros productos, con apoyo postventa, compromiso y capacitación permanente en todos los sectores que lo requieran.</p></div>
-      <div class="wcard reveal d2"><h3><span class="ic">◈</span>Visión</h3><p>Ser el referente nacional en soluciones integrales de higiene profesional, integrando química, servicio y tecnología — incluida la robótica autónoma — para elevar el estándar de limpieza en Chile.</p></div>
-      <div class="wcard reveal d3"><h3><span class="ic">⬡</span>Planta propia</h3><p>Planta de envases y bidones: botellas, tapas y formatos a medida, con control de calidad de punta a punta y certificaciones vigentes.</p></div>
+  </div>
+</section>
+
+<!-- SERVICIO INTEGRAL -->
+<section class="sec" id="servicio">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="kicker reveal" style="justify-content:center">Lo que nos diferencia</div>
+      <h2 class="sec-h reveal d1">Más que productos: <em>te acompañamos en todo el ciclo.</em></h2>
+      <p class="sec-sub reveal d2">Cada cliente recibe un programa completo. Diagnosticamos, equipamos, capacitamos y mantenemos — para que la higiene funcione todos los días, no solo el día de la compra.</p>
     </div>
+    <div class="serv-grid">
+      <div class="serv-card reveal"><div class="num">01</div><div class="ic">🔍</div><h3>Asesoría y diagnóstico</h3><p>Especialistas analizan tu operación e identifican áreas de riesgo, para diseñar un programa de higiene a la medida de tu industria.</p></div>
+      <div class="serv-card reveal d1"><div class="num">02</div><div class="ic">🧪</div><h3>Programa y productos a medida</h3><p>Seleccionamos —o desarrollamos— los productos y procesos adecuados para cada superficie, proceso y normativa.</p></div>
+      <div class="serv-card reveal d2"><div class="num">03</div><div class="ic">⚙️</div><h3>Equipamiento y dosificación</h3><p>Instalamos los equipos de dosificación automática y control, asegurando el uso correcto, seguro y eficiente de cada producto.</p></div>
+      <div class="serv-card reveal"><div class="num">04</div><div class="ic">🎓</div><h3>Capacitación y entrenamiento</h3><p>Jornadas grupales, individuales y entrenamiento práctico en terreno, en las distintas áreas y aplicaciones de limpieza e higiene.</p></div>
+      <div class="serv-card reveal d1"><div class="num">05</div><div class="ic">📋</div><h3>Material gráfico y señalética</h3><p>Portafichas, cartelería y procedimientos que mantienen a tu personal informado sobre el manejo seguro de productos químicos.</p></div>
+      <div class="serv-card reveal d2"><div class="num">06</div><div class="ic">🛠️</div><h3>Asistencia técnica y mantención</h3><p>Técnicos propios realizan instalaciones y mantenciones preventivas y correctivas de los sistemas de dosificación y control.</p></div>
+    </div>
+    <p class="serv-foot reveal">Producto + equipamiento + asesoría + formación + mantención. <b>Un solo socio para toda tu higiene.</b></p>
   </div>
 </section>
 
 <!-- SOLUCIONES -->
-<section id="soluciones" class="sec-pad">
+<section class="sec" id="soluciones">
   <div class="wrap">
-    <div class="kicker reveal">Soluciones</div>
-    <h2 class="sec-h reveal d1">Todo el ciclo de la higiene,<br>en una sola casa.</h2>
-    <div class="bento">
-      <div class="bcard wide reveal"><div class="ic">🧪</div><h3>Limpieza y desinfección industrial</h3><p>Productos químicos de elaboración propia para sanitización e higiene de superficies comerciales e industriales, con fórmulas certificadas y desarrollo a medida para cada operación.</p></div>
-      <div class="bcard wide reveal d1"><div class="ic">🤖</div><h3>Robótica autónoma</h3><p>Flota de robots de limpieza con IA operando en retail, industria y centros de distribución. Telemetría en la nube y reportes verificables. <a href="robots/index.html" style="color:var(--teal);font-weight:600">Conocer la división ⟶</a></p></div>
-      <div class="bcard reveal"><div class="ic">🎓</div><h3>Asesoría en higiene</h3><p>Diagnóstico, capacitación y acompañamiento permanente para una utilización óptima de cada solución.</p></div>
-      <div class="bcard reveal d1"><div class="ic">🛠</div><h3>Soporte integral</h3><p>Programa de soporte postventa con equipo técnico propio en terreno, en todo Chile.</p></div>
-      <div class="bcard reveal d2"><div class="ic">📦</div><h3>Planta de envases</h3><p>Bidones, envases, botellas y tapas de fabricación propia para formatos industriales.</p></div>
-      <div class="bcard wide reveal"><div class="ic">✦</div><h3>Marcas propias y representaciones</h3><p>Fabricantes de marcas propias y distribuidores exclusivos de líneas internacionales: KH7 y los discos Bonastre para abrillantado y restauración de superficies solo con agua.</p></div>
-      <div class="bcard reveal d1"><div class="ic">✓</div><h3>Certificaciones</h3><p>Procesos y productos certificados, con calidad verificable de origen a destino.</p></div>
+    <div class="sec-head">
+      <div class="kicker reveal">Soluciones por industria</div>
+      <h2 class="sec-h reveal d1">Un programa de higiene para cada rubro.</h2>
+      <p class="sec-sub reveal d2">No vendemos un químico: diseñamos programas completos según las exigencias técnicas y sanitarias de tu sector.</p>
+    </div>
+    <div class="sol-filter reveal" id="solFilter">
+      <button class="chip active" data-f="todos">Todas</button>
+      <button class="chip" data-f="industria">Industria</button>
+      <button class="chip" data-f="servicios">Servicios</button>
+      <button class="chip" data-f="salud">Salud y personas</button>
+    </div>
+    <div class="sol-grid" id="solGrid">
+      <article class="sol reveal" data-cat="industria">
+        <div class="ph" style="background-image:url('assets/fotos/desinfeccion-industrial.jpg')"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🏭</div><h3>Alimentos y Bebidas</h3>
+          <p>Programa de higiene para plantas: filtros sanitarios, lavados CIP, limpieza OPC y asesoría HACCP y GMP. Mejor calidad, mayor vida útil y menos mermas.</p>
+          <div class="meta"><b>CIP / OPC</b><b>HACCP · GMP</b><b>Inocuidad</b></div>
+        </div>
+      </article>
+      <article class="sol reveal d1" data-cat="servicios">
+        <div class="ph" style="background-image:url('assets/fotos/limpieza-oficinas.jpg')"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🏢</div><h3>Instituciones y Empresas</h3>
+          <p>Cuidado y mantención de pisos (ceras, sellos, diamantado y cristalizado) y programa de higiene de cocinas con capacitación y señalética.</p>
+          <div class="meta"><b>Pisos</b><b>Higiene de cocina</b><b>Prevención ETA</b></div>
+        </div>
+      </article>
+      <article class="sol reveal d2" data-cat="servicios">
+        <div class="ph" style="background-image:url('assets/fotos/hoteleria.jpg')"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🛎️</div><h3>Hotelería y Casinos</h3>
+          <p>Soluciones de limpieza, desinfección y aromatización para espacios de alto estándar y atención de público, con resultados impecables día a día.</p>
+          <div class="meta"><b>Limpieza</b><b>Aromatización</b><b>Alto tránsito</b></div>
+        </div>
+      </article>
+      <article class="sol reveal" data-cat="servicios">
+        <div class="ph grad"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🧺</div><h3>Lavandería</h3>
+          <p>Programa completo: programación de máquinas, productos líquidos, inyección automática y visitas técnicas que cuidan la vida útil de cada prenda.</p>
+          <div class="meta"><b>Inyección automática</b><b>Mediciones de blanco</b></div>
+        </div>
+      </article>
+      <article class="sol reveal d1" data-cat="salud">
+        <div class="ph grad"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🧴</div><h3>Higiene Personal</h3>
+          <p>Gama completa para el cuidado diario: alcohol gel y espuma, jabones glicerina y antibacterial, protección solar y cuidado capilar.</p>
+          <div class="meta"><b>Alcohol gel</b><b>Jabones</b><b>Cuidado diario</b></div>
+        </div>
+      </article>
+      <article class="sol reveal d2" data-cat="industria">
+        <div class="ph grad"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🔧</div><h3>Metalmecánica</h3>
+          <p>Lubricación, lavado de piezas, control de fluidos y limpiadores eléctricos especializados — con asesoría técnica sobre cada formulación.</p>
+          <div class="meta"><b>Limpiadores eléctricos</b><b>Lubricación</b></div>
+        </div>
+      </article>
+      <article class="sol reveal" data-cat="salud">
+        <div class="ph grad"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🏥</div><h3>Tressa Medical</h3>
+          <p>División dedicada al sector clínico y hospitalario: formulaciones avanzadas para desinfección de superficies, manos y material quirúrgico.</p>
+          <div class="meta"><b>Clínico</b><b>Hospitalario</b><b>I+D propio</b></div>
+        </div>
+      </article>
+      <article class="sol reveal d1" data-cat="industria servicios">
+        <div class="ph" style="background-image:url('assets/fotos/limpieza-superficies.jpg')"></div><div class="shade"></div>
+        <div class="body"><div class="ic">🤖</div><h3>Robótica de limpieza</h3>
+          <p>Nuestra división de robots autónomos con IA, operando hoy en retail e industria. La innovación que nos diferencia.</p>
+          <div class="meta"><b><a href="robots/index.html" style="color:#bfeaf2">Ver la división →</a></b></div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- KH7 -->
-<section id="kh7" class="sec-pad">
-  <div class="wrap kh7">
-    <div>
-      <img class="kh7-logo reveal" src="robots/assets/kh7_logo.svg" alt="KH7">
-      <span class="tagline reveal d1">Distribuidor exclusivo · Chile</span>
-      <h2 class="sec-h reveal d2" style="font-size:clamp(1.8rem,3.6vw,2.7rem)">El quitagrasas líder,<br>de nuestra mano en Chile.</h2>
-      <p class="sec-sub reveal d3">Tressa es el distribuidor exclusivo de KH7 en Chile: la marca española líder en quitagrasas y quitamanchas, presente en las principales cadenas de retail del país.</p>
-      <div class="feats">
-        <div class="feat reveal d2"><span class="dot"></span><div><b>Resultados profesionales</b><span>Quitagrasas, quitamanchas, desincrustante, cocina, baño y más.</span></div></div>
-        <div class="feat reveal d3"><span class="dot"></span><div><b>Innovación y compromiso ambiental</b><span>Fórmulas con valor añadido y mínimo impacto en el entorno.</span></div></div>
-        <div class="feat reveal d4"><span class="dot"></span><div><b>ADN deportivo</b><span>La marca española más representada en el Rally Dakar, con dos décadas compitiendo.</span></div></div>
+<!-- CADENA DE VALOR -->
+<section class="sec" id="cadena">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker reveal">Cadena de valor</div>
+      <h2 class="sec-h reveal d1">De extremo a extremo, bajo un mismo techo.</h2>
+      <p class="sec-sub reveal d2">Controlamos toda la cadena — incluso fabricamos nuestros propios envases. Esto nos da autonomía, trazabilidad y la capacidad de adaptar cada solución a tu medida.</p>
+    </div>
+    <div class="chain">
+      <div class="chain-card reveal">
+        <div class="ph flat"><span class="big">🔬</span></div>
+        <div class="body"><h3>Diseño e I+D</h3><p>Investigación y desarrollo de formulaciones avanzadas, adaptadas a las necesidades específicas de cada industria.</p></div>
+      </div>
+      <div class="chain-card reveal d1">
+        <div class="ph" style="background-image:url('assets/fotos/planta-envasado.jpg')"></div>
+        <div class="body"><h3>Fabricación y envasado</h3><p>Producción y envasado de detergentes, desinfectantes, jabones y cosméticos con control de calidad en cada etapa.</p></div>
+      </div>
+      <div class="chain-card reveal d2">
+        <div class="ph flat"><span class="big">🧴</span></div>
+        <div class="body"><h3>Planta de envases propia</h3><p>Bidones, botellas y tapas con matricerías propias y líneas de soplado e inyección en PEAD y PET.</p></div>
+      </div>
+      <div class="chain-card reveal d3">
+        <div class="ph" style="background-image:url('assets/fotos/distribucion-camion.jpg')"></div>
+        <div class="body"><h3>Distribución nacional</h3><p>Logística y flota propia que entrega oportunamente en todo Chile, con la cobertura que tu operación necesita.</p></div>
       </div>
     </div>
-    <div class="kh7-visual reveal d2">
-      <img src="robots/assets/kh7_quitagrasas.png" alt="KH7 Quitagrasas">
-      <img src="robots/assets/kh7_sinmanchas.png" alt="KH7 Sin Manchas">
+  </div>
+</section>
+
+<!-- MARCAS -->
+<section class="sec" id="marcas">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker reveal">Marcas y representaciones</div>
+      <h2 class="sec-h reveal d1">Fabricamos lo nuestro y representamos lo mejor.</h2>
+      <p class="sec-sub reveal d2">Marcas propias, distribución exclusiva de líderes internacionales y alianzas estratégicas con grandes fabricantes.</p>
+    </div>
+    <div class="brands">
+      <div class="brand-feat reveal">
+        <div class="bg"></div>
+        <div><span class="tag">Distribuidor exclusivo en Chile</span><h3>KH‑7</h3>
+        <p>Representación y distribución exclusiva de la prestigiosa marca española KH‑7, líder en quitagrasas y quitamanchas, presente en los principales supermercados del país.</p></div>
+        <div class="pills"><span>Antigrasas</span><span>Quitamanchas</span><span>Antisarro</span><span>Limpia Vidrios</span><span>Vitrocerámica</span><span>Baños</span><span>Cocina</span></div>
+      </div>
+      <div class="brand-side">
+        <div class="brand-card reveal d1"><div class="bh"><span class="badge">Exclusivo</span></div><h3>Bonastre</h3><p>Métodos para restaurar, limpiar, abrillantar y mantener superficies <strong>solo con agua</strong>: Pads, Pro, Xtreme, Duo, Magic Renova y Diamantes Profesionales.</p></div>
+        <div class="brand-card reveal d2"><div class="bh"><span class="badge">Proveedor estratégico</span></div><h3>Softys · Elite</h3><p>Fabricación de la línea de jabones y alcoholes Elite Professional (Multiflex y Graneles) y de alcohol gel y jabones humectantes Elite de consumo masivo.</p></div>
+      </div>
+    </div>
+    <div class="brands-row">
+      <div class="brand-card reveal"><div class="bh"><span class="badge">Marca propia</span></div><h3>Tressa Medical</h3><p>División médica para el mercado clínico y hospitalario, con formulaciones avanzadas e innovación constante.</p></div>
+      <div class="brand-card reveal d1"><div class="bh"><span class="badge">Alianza</span></div><h3>Aroma Quest</h3><p>Microdifusores de fragancia continua: espacios que siempre huelen asombrosamente bien.</p></div>
+      <div class="brand-card reveal d2"><div class="bh"><span class="badge">Accesorios</span></div><h3>MAYA · FBK</h3><p>Línea completa de accesorios profesionales de limpieza y productos detectables para inocuidad alimentaria.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ROBÓTICA -->
-<section class="sec-pad" style="padding-top:2vh">
+<!-- CERTIFICACIONES -->
+<section class="sec" id="certificaciones">
   <div class="wrap">
-    <a class="robo reveal" href="robots/index.html" style="display:block">
-      <div class="robo-in">
-        <div>
-          <div class="kicker">División Robótica · Nuevo</div>
-          <h2>La limpieza,<br><em>reinventada.</em></h2>
-          <p>Robots autónomos con navegación AI, LiDAR y reportes en la nube, operando cada día en tiendas, plantas y centros de distribución a lo largo de Chile.</p>
-          <div class="chips">
-            <span class="chip">+40 robots</span><span class="chip">+20 instalaciones</span><span class="chip">+150 mil m²/mes</span><span class="chip">Monitoreo 24/7</span>
-          </div>
-          <div style="margin-top:30px"><span class="btn btn-fill">Explorar la división ⟶</span></div>
-        </div>
+    <div class="sec-head center">
+      <div class="kicker reveal" style="justify-content:center">Respaldo y calidad</div>
+      <h2 class="sec-h reveal d1">Estándares internacionales que reducen tu riesgo.</h2>
+      <p class="sec-sub reveal d2">Detrás de cada producto hay un sistema auditable de procesos, control de calidad y cumplimiento normativo.</p>
+    </div>
+    <div class="cert-grid">
+      <div class="cert reveal"><div class="seal">ISO<br>9001</div><h3>ISO 9001:2015</h3><p>Sistema de Gestión de la Calidad — estándar internacional certificable.</p></div>
+      <div class="cert reveal d1"><div class="seal">ISO<br>14001</div><h3>ISO 14001:2015</h3><p>Gestión medioambiental: el riesgo ambiental gestionado y en mejora continua.</p></div>
+      <div class="cert reveal d2"><div class="seal">ISO<br>13485</div><h3>ISO 13485:2016</h3><p>Gestión de calidad para dispositivos médicos, seguros y efectivos.</p></div>
+      <div class="cert reveal d3"><div class="seal">✡</div><h3>KOSHER</h3><p>Producto e ingredientes conformes a la norma Kosher — complementaria a las ISO.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROBÓTICA BANNER -->
+<section class="robo-band">
+  <div class="robo">
+    <div class="robo-in">
+      <div class="reveal">
+        <div class="kicker">Innovación · División Robótica</div>
+        <h2>La limpieza, <em>reinventada.</em></h2>
+        <p>Llevamos nuestro servicio integral un paso más allá: una flota de robots de limpieza autónomos con inteligencia artificial, operando hoy en tiendas, plantas y centros de distribución a lo largo de Chile.</p>
+        <div class="chips"><span>+40 robots</span><span>+20 instalaciones</span><span>Monitoreo 24/7</span><span>Reportes verificables</span></div>
+        <a class="btn btn-fill" href="robots/index.html">Explorar la división robótica →</a>
+      </div>
+      <div class="robo-visual reveal d1">
+        <div class="ring"></div>
         <img src="robots/assets/tn70_persp_tressa.png" alt="Robot de limpieza autónomo Tressa" loading="lazy">
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
 <!-- CLIENTES -->
-<section id="clientes" class="sec-pad" style="padding-top:4vh">
+<section class="sec" id="clientes">
   <div class="wrap">
-    <div class="kicker reveal">Confían en nosotros</div>
-    <h2 class="sec-h reveal d1">Las marcas que mueven Chile.</h2>
+    <div class="sec-head center">
+      <div class="kicker reveal" style="justify-content:center">Confían en nosotros</div>
+      <h2 class="sec-h reveal d1">El socio de higiene de las marcas que mueven Chile.</h2>
+      <p class="sec-sub reveal d2">Años entregando soluciones a las industrias Institucional y de Alimentos &amp; Bebidas — y a grandes operaciones de retail, minería, acuicultura, energía y servicios.</p>
+    </div>
   </div>
-  <div class="marquee reveal d2">
+  <div class="marquee reveal">
     <div class="mq-track" id="mq1"></div>
-    <div class="mq-track rev" id="mq2"></div>
+    <div class="mq-track r2" id="mq2"></div>
   </div>
 </section>
 
 <!-- CONTACTO -->
-<section class="final" id="contacto">
-  <h2 class="reveal">Hablemos.</h2>
-  <p class="reveal d1">Cuéntanos qué necesita tu operación: química, servicio o robótica. Te respondemos a la brevedad.</p>
-  <div class="ctas reveal d2">
-    <a class="btn btn-fill" href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Escribirnos ⟶</a>
-    <a class="btn btn-ghost" href="tel:+56228402900">Llamar +56 2 2840 2900</a>
-  </div>
-  <div class="contact-cards">
-    <div class="ccard reveal d1"><b>Ubicación</b>Santa Rita 3480, Parque Industrial Puerta Sur, San Bernardo, Santiago.</div>
-    <div class="ccard reveal d2"><b>Teléfono</b>+56 2 2840 2900</div>
-    <div class="ccard reveal d3"><b>División Robótica</b>Demos y cotizaciones de limpieza autónoma en tu instalación.</div>
+<section class="sec" id="contacto">
+  <div class="wrap contact">
+    <div class="contact-info">
+      <div class="kicker reveal">Contacto</div>
+      <h2 class="reveal d1">Conversemos sobre tu operación.</h2>
+      <p class="sec-sub reveal d2">Cuéntanos qué necesita tu higiene y te contactaremos con una propuesta a tu medida. Un especialista te acompañará desde el primer día.</p>
+      <div class="cinfo">
+        <a class="reveal d2" href="https://maps.google.com/?q=Santa+Rita+3480+San+Bernardo+Santiago" target="_blank" rel="noopener"><span class="ic">📍</span><span><b>Ubicación</b><small>Santa Rita 3480, Parque Industrial Puerta Sur, San Bernardo, Santiago, Región Metropolitana.</small></span></a>
+        <a class="reveal d3" href="tel:+56228402900"><span class="ic">☎</span><span><b>Teléfono</b><small>+56 2 2840 2900</small></span></a>
+        <a class="reveal d3" href="https://www.instagram.com/tressa.chile/" target="_blank" rel="noopener"><span class="ic">◎</span><span><b>Síguenos</b><small>Instagram @tressa.chile</small></span></a>
+      </div>
+    </div>
+    <div class="cform reveal d1">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform?embedded=true" title="Formulario de contacto Tressa" loading="lazy">Cargando formulario…</iframe>
+      <p class="fallback">¿No se ve el formulario? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Ábrelo en una pestaña nueva →</a></p>
+    </div>
   </div>
 </section>
 
+</main>
+
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
     <div class="foot">
       <div>
-        <img src="robots/assets/tressa_logo_white.png" alt="TRESSA">
-        <p>Empresa chilena dedicada a la elaboración, envasado y distribución de productos químicos para la limpieza y desinfección industrial. Más de 30 años cambiando el concepto de la limpieza.</p>
+        <a class="brand" href="#inicio"><img src="assets/tressa-logo-blanco.png" alt="TRESSA"></a>
+        <p>Empresa chilena dedicada a la elaboración, envasado y distribución de productos químicos para la limpieza y desinfección industrial. Fabricación de productos de limpieza, desinfectantes, jabones y cosméticos.</p>
       </div>
       <div>
-        <h4>Empresa</h4>
-        <a href="#quienes-somos">Quiénes somos</a>
-        <a href="#soluciones">Soluciones</a>
+        <h5>Empresa</h5>
+        <a href="#empresa">Quiénes somos</a>
+        <a href="#servicio">Servicio integral</a>
+        <a href="#cadena">Capacidades</a>
+        <a href="#certificaciones">Certificaciones</a>
+      </div>
+      <div>
+        <h5>Soluciones</h5>
+        <a href="#soluciones">Por industria</a>
+        <a href="#marcas">KH‑7 y marcas</a>
+        <a href="robots/index.html">División Robótica</a>
         <a href="#clientes">Clientes</a>
       </div>
       <div>
-        <h4>Divisiones</h4>
-        <a href="#kh7">KH7 Chile</a>
-        <a href="robots/index.html">Robótica</a>
-        <a href="#soluciones">Planta de envases</a>
-      </div>
-      <div>
-        <h4>Contacto</h4>
+        <h5>Contacto</h5>
         <a href="tel:+56228402900">+56 2 2840 2900</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqHxQrWpGe_iYCGGpGwLm7Ax_JTFkrixImZlyboiRiV6UHhg/viewform" target="_blank" rel="noopener">Formulario</a>
+        <a href="#contacto">Formulario</a>
+        <a href="https://www.instagram.com/tressa.chile/" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.tressa.cl/" target="_blank" rel="noopener">tressa.cl</a>
       </div>
     </div>
     <div class="foot-base">
-      <span>© Tressa — Todos los derechos reservados.</span>
-      <span>Fabricación de productos de limpieza, desinfectantes, jabones y cosméticos.</span>
+      <span>© Tressa — Cambiando el concepto de la limpieza. Todos los derechos reservados.</span>
+      <span>Santa Rita 3480, San Bernardo · Santiago, Chile</span>
     </div>
   </div>
 </footer>
+
+<button class="totop" id="totop" aria-label="Volver arriba">↑</button>
 
 <script src="main.js"></script>
 </body>
